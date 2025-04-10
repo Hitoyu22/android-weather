@@ -10,6 +10,7 @@ import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import fr.esgi.android.weather.network.WeatherAPI
 import fr.esgi.android.weather.notifications.NotificationHelper
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
         override fun run() {
             Log.d("Notification", "Sending Notification")
+            val weather = WeatherAPI.getWeather("Paris", null).get()
             notificationHelper.sendNotification("Weather Alert", "It's time for a weather update!")
             Log.d("Notification", "Notification sent")
             handler.postDelayed(this, 60000)

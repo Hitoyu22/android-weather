@@ -3,6 +3,7 @@ package fr.esgi.android.weather.network
 import android.util.Log
 import com.google.gson.Gson
 import fr.esgi.android.weather.models.WeatherResponse
+import kotlinx.coroutines.async
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
@@ -15,7 +16,7 @@ object WeatherAPI {
 
     private fun <T> request(endpoint: String, classOfT: Class<T>): CompletableFuture<T> {
         val con = URL("$WEATHER_API$endpoint&appid=$API_KEY&lang=fr").openConnection()
-        con.setRequestProperty("Content-Type", "application/json")
+        con.setRequestProperty("Accept", "application/json")
 
         return CompletableFuture.supplyAsync {
             val reader = BufferedReader(InputStreamReader(con.inputStream))
