@@ -19,9 +19,9 @@ class MainActivity : AppCompatActivity() {
     private val notificationRunnable = object : Runnable {
         @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
         override fun run() {
-            Log.v("test", "test")
+            Log.d("Notification", "Sending Notification")
             notificationHelper.sendNotification("Weather Alert", "It's time for a weather update!")
-            Log.v("test2", "testets")
+            Log.d("Notification", "Notification sent")
             handler.postDelayed(this, 60000)
         }
     }

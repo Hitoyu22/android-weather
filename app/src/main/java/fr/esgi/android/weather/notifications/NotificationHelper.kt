@@ -18,9 +18,7 @@ class NotificationHelper(private val context: Context) {
     private val channelId = "weather_alerts"
 
     init {
-        val channel = NotificationChannel(
-            channelId, "Weather Alerts", NotificationManager.IMPORTANCE_HIGH
-        )
+        val channel = NotificationChannel(channelId, "Weather Alerts", NotificationManager.IMPORTANCE_HIGH)
         val manager = context.getSystemService(NotificationManager::class.java)
         manager?.createNotificationChannel(channel)
 

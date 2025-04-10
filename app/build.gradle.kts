@@ -12,19 +12,7 @@ android {
         minSdk = 28
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField(
-            "String",
-            "OPENWEATHER_API_KEY",
-            "\"${project.findProperty("openweathermap_api_key") ?: ""}\""
-        )
-    }
-
-    buildFeatures {
-        buildConfig = true
+        versionName = "1.0.0"
     }
 
     buildTypes {
@@ -53,19 +41,10 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.gson)
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.work.runtime.ktx)
 
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("androidx.work:work-runtime-ktx:2.7.1")
-
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.work:work-runtime-ktx:2.8.1")
-    implementation("androidx.core:core-splashscreen:1.0.1")
-    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
-
-    implementation("androidx.core:core:1.12.0")
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    // keeping this here in case we have the time to use it
+    // implementation("androidx.core:core-splashscreen:1.0.1")
 }
