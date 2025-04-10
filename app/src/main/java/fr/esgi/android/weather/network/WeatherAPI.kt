@@ -5,7 +5,6 @@ import com.google.gson.Gson
 import fr.esgi.android.weather.models.WeatherResponse
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.CompletableFuture
 
@@ -15,7 +14,7 @@ object WeatherAPI {
     private const val API_KEY = "a20363091a1ab32d570b5563312ed343"
 
     private fun <T> request(endpoint: String, classOfT: Class<T>): CompletableFuture<T> {
-        val con = URL("$WEATHER_API$endpoint&appid=$API_KEY&lang=fr").openConnection() as HttpURLConnection
+        val con = URL("$WEATHER_API$endpoint&appid=$API_KEY&lang=fr").openConnection()
         con.setRequestProperty("Content-Type", "application/json")
 
         return CompletableFuture.supplyAsync {
