@@ -10,7 +10,7 @@ import fr.esgi.android.weather.R
 import fr.esgi.android.weather.network.WeatherAPI
 import fr.esgi.android.weather.notifications.NotificationHelper
 
-class HomeActivity : WeatherActivity(R.layout.activity_main) {
+class HomeActivity : WeatherActivity(R.layout.activity_main, R.id.home) {
 
     private lateinit var notificationHelper: NotificationHelper
     private val handler = Handler(Looper.getMainLooper())

@@ -12,7 +12,7 @@ import com.google.android.material.navigation.NavigationBarView
 import fr.esgi.android.weather.R
 import kotlin.reflect.KClass
 
-abstract class WeatherActivity(val layout: Int) : AppCompatActivity() {
+abstract class WeatherActivity(val layout: Int, val navId: Int) : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +24,9 @@ abstract class WeatherActivity(val layout: Int) : AppCompatActivity() {
             insets
         }
 
-        findViewById<NavigationBarView>(R.id.navigation).setOnItemSelectedListener { onNavBarClick(it) }
+        val navigation = findViewById<NavigationBarView>(R.id.navigation)
+        navigation.selectedItemId = navId
+        navigation.setOnItemSelectedListener { onNavBarClick(it) }
 
     }
 
