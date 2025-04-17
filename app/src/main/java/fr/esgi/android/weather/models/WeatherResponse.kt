@@ -7,7 +7,8 @@ data class WeatherResponse(
     @SerializedName("weather") val weather: List<Weather>,
     @SerializedName("main") val main: Main,
     @SerializedName("timezone") val timezone: Int,
-    @SerializedName("wind") val wind: Wind
+    @SerializedName("wind") val wind: Wind,
+    @SerializedName("name") val name: String,
 )
 
 data class Coordinates(
