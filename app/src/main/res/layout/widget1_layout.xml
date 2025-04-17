@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="200dp"
+    android:minHeight="200dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="@drawable/widget_background">
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Paris, France"
+        android:textSize="25sp"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="8dp"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:id="@+id/weather_icon"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:src="@drawable/weather_icon"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="15°C"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+</LinearLayout>
