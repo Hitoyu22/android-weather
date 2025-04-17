@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="widget_background_start">#47BFDF</color>
+    <color name="widget_background_end">#4A91FF</color>
 </resources>
