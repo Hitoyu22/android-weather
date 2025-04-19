@@ -8,13 +8,14 @@
     tools:context=".activities.HomeActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/background_image"
         android:layout_width="match_parent"
         android:layout_height="498dp"
+        android:contentDescription="TODO"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/sunny" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"

@@ -8,14 +8,14 @@
     android:padding="4dp">
 
     <TextView
-        android:id="@+id/dayText"
+        android:id="@+id/day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lun."
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/iconText"
+        android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="☀️"
@@ -23,7 +23,7 @@
         android:layout_marginVertical="4dp"/>
 
     <TextView
-        android:id="@+id/tempText"
+        android:id="@+id/temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="15°C"/>

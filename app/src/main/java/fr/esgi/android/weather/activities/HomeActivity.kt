@@ -11,11 +11,17 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresPermission
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.get
+import androidx.core.view.size
 import fr.esgi.android.weather.R
-import fr.esgi.android.weather.network.WeatherAPI
+import fr.esgi.android.weather.WeatherType
+import fr.esgi.android.weather.api.WeatherAPI
 import fr.esgi.android.weather.notifications.NotificationHelper
-import org.json.JSONObject
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.TextStyle
+import java.util.Locale
 
 class HomeActivity : WeatherActivity(R.layout.activity_main, R.id.home) {
 
@@ -26,104 +32,83 @@ class HomeActivity : WeatherActivity(R.layout.activity_main, R.id.home) {
         @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
         override fun run() {
             Log.d("Notification", "Sending Notification")
-            val weather = WeatherAPI.getWeather("Paris", null).get()
+            //val weather = WeatherAPI.getWeather("Paris", null).get()
             notificationHelper.sendNotification(
                 "Weather Alert",
-                "It's time for a weather update! " + weather.weather.joinToString(", ") { it.main }
+                ""//"It's time for a weather update! " + weather.weather.joinToString(", ") { it.main }
             )
             Log.d("Notification", "Notification sent")
             handler.postDelayed(this, 60000)
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    private val dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+
+    private lateinit var background: ImageView
+    private lateinit var city: TextView
+    private lateinit var temperature: TextView
+    private lateinit var forecast: LinearLayout
+    private lateinit var air: TextView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val imageView = findViewById<ImageView>(R.id.imageView)
-        imageView.setImageDrawable(getWeatherDrawable())
+        background = findViewById<ImageView>(R.id.background_image)
+        background.setImageDrawable(getWeatherDrawable(WeatherType.SUNNY, true))
 
-        val sharedPreferences = getSharedPreferences("app_preferences", MODE_PRIVATE)
-        val isNightModeEnabled = sharedPreferences.getBoolean("night_mode_enabled", false)
-        if (isNightModeEnabled) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        city = findViewById<TextView>(R.id.cityText)
+        city.text = getString(R.string.loading)
+        temperature = findViewById<TextView>(R.id.currentTemp)
+        temperature.text = "...°C"
+        findViewById<TextView>(R.id.dateText).text = LocalDate.now().format(dateFormatter)
+
+        forecast = findViewById<LinearLayout>(R.id.forecastList)
+        (0 until 7).forEach { i ->
+            val view = layoutInflater.inflate(R.layout.weather_forecast_item, forecast, false)
+            view.findViewById<TextView>(R.id.day).text = getString(R.string.loading)
+            view.findViewById<TextView>(R.id.icon).text = "☀️"
+            view.findViewById<TextView>(R.id.temperature).text = "...°C"
+            forecast.addView(view)
         }
 
-        val weatherData = loadWeatherData()
+        air = findViewById<TextView>(R.id.airQualityText)
+        air.text = getString(R.string.air_quality)
 
-        findViewById<TextView>(R.id.cityText).text = weatherData.getString("city")
-        findViewById<TextView>(R.id.currentTemp).text = "${weatherData.getInt("temperature")}°C"
-        findViewById<TextView>(R.id.dateText).text = weatherData.getString("date")
-
-        val airQuality = weatherData.getJSONObject("airQuality")
-        findViewById<TextView>(R.id.airQualityText).text =
-            "${airQuality.getString("description")}\nLa qualité de l’air est notée ${airQuality.getInt("score")}/5 aujourd’hui"
-
-        val forecastLayout = findViewById<LinearLayout>(R.id.forecastList)
-        val forecastArray = weatherData.getJSONArray("forecast")
-        for (i in 0 until forecastArray.length()) {
-            val dayData = forecastArray.getJSONObject(i)
-            val view = layoutInflater.inflate(R.layout.weather_forecast_item, forecastLayout, false)
-            view.findViewById<TextView>(R.id.dayText).text = dayData.getString("day")
-            view.findViewById<TextView>(R.id.iconText).text = dayData.getString("icon")
-            view.findViewById<TextView>(R.id.tempText).text = "${dayData.getInt("temp")}°C"
-            forecastLayout.addView(view)
-        }
+        fetchWeather()
     }
 
-    private fun getWeatherDrawable(): Drawable? {
-        val weatherType = "sunny"
-        val isDarkMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+    @SuppressLint("SetTextI18n")
+    private fun fetchWeather() {
+        val city = WeatherAPI.searchCity("Gagny").get().first()
+        val weather = WeatherAPI.getCurrentWeather(city).get()
 
-        return when (weatherType.lowercase()) {
-            "sunny" -> loadImage(isDarkMode, "sunny")
-            "cloudy" -> loadImage(isDarkMode, "cloudy")
-            "rainy" -> loadImage(isDarkMode, "rainy")
-            "snow" -> loadImage(isDarkMode, "snow")
-            "thunder" -> loadImage(isDarkMode, "thunder")
-            else -> loadImage(isDarkMode, "sunny")
+        this.city.text = city.name + ", " + city.country
+        temperature.text = "${weather.temperature}°C"
+
+        background.setImageDrawable(getWeatherDrawable(weather.weather, !weather.isDay))
+
+        val today = LocalDate.now();
+        val day = today.dayOfWeek.value
+        val start = today.minusDays(day - 1L)
+        val end = today.plusDays(7L - day)
+        val week = WeatherAPI.getWeather(city, start.toString(), end.toString()).get()
+        for (i in 0 until forecast.size) {
+            val day = week[i]
+            val view = forecast[i]
+            view.findViewById<TextView>(R.id.day).text = day.date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()) + "."
+            view.findViewById<TextView>(R.id.icon).text = day.weather.icon
+            view.findViewById<TextView>(R.id.temperature).text = "${day.temperature}°C"
         }
+
+        val aqi = 20
+        val note = (100 - aqi) / 20
+        air.text = air.text.toString().replace("{note}", "$note")
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables", "DiscouragedApi")
-    private fun loadImage(isDarkMode: Boolean, imageName: String): Drawable? {
-        val imageNameWithSuffix = if (isDarkMode) {
-            imageName + "_night"
-        } else {
-            imageName
-        }
+    private fun getWeatherDrawable(weather: WeatherType, night: Boolean): Drawable? {
+        val id = weather.getResourceID(night)
 
-        val resourceId = resources.getIdentifier(imageNameWithSuffix, "drawable", packageName)
-
-        if (resourceId == 0) {
-            Log.e("HomeActivity", "Resource not found: $imageNameWithSuffix")
-            return null
-        }
-
-        return resources.getDrawable(resourceId, null)
-    }
-
-    private fun loadWeatherData(): JSONObject {
-        val jsonStr = """
-            {
-              "city": "Paris, France",
-              "date": "7 juillet 2025",
-              "temperature": 27,
-              "forecast": [
-                { "day": "Lun.", "icon": "☀️", "temp": 15 },
-                { "day": "Mar.", "icon": "⛅", "temp": 15 },
-                { "day": "Mer.", "icon": "⛅", "temp": 15 },
-                { "day": "Jeu.", "icon": "🌧️", "temp": 15 },
-                { "day": "Ven.", "icon": "⛈️", "temp": 15 }
-              ],
-              "airQuality": {
-                "score": 5,
-                "description": "Qualité de l’air excellente"
-              }
-            }
-        """.trimIndent()
-        return JSONObject(jsonStr)
+        return ResourcesCompat.getDrawable(resources, id, null)
     }
 }

@@ -3,4 +3,8 @@
     <string name="favorites">Favoris</string>
     <string name="home">Accueil</string>
     <string name="settings">Paramètres</string>
+    <string name="enable_dark_mode">Activer le mode sombre</string>
+    <string name="apply_settings">Appliquer les modifications</string>
+    <string name="loading">Chargement…</string>
+    <string name="air_quality">L\'indice de qualité de l’air est de {note}/5 aujourd’hui</string>
 </resources>

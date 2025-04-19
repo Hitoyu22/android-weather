@@ -9,67 +9,37 @@
     tools:ignore="UseSwitchCompatOrMaterialXml">
 
     <TextView
-        android:id="@+id/settingsTitle"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mes paramètres"
+        android:text="@string/settings"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="24dp"
-        android:gravity="center" />
+        android:layout_marginBottom="24dp" />
 
-    <Switch
-        android:id="@+id/locationSwitch"
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/dark_mode_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Autoriser la géolocalisation"
-        app:layout_constraintTop_toBottomOf="@id/settingsTitle"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/enable_dark_mode"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:minHeight="48dp"
-        android:minWidth="48dp" />
-
-    <Switch
-        android:id="@+id/nightModeSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Activer le mode sombre"
-        app:layout_constraintTop_toBottomOf="@id/locationSwitch"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:minHeight="48dp"
-        android:minWidth="48dp"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <Button
-        android:id="@+id/applyButton"
+        android:id="@+id/apply_settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Appliquer les modifications"
-        app:layout_constraintTop_toBottomOf="@id/nightModeSwitch"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/apply_settings"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:minHeight="48dp"
-        android:minWidth="48dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dark_mode_switch" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
