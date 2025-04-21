@@ -19,16 +19,22 @@ object WeatherAPI {
     private const val WEATHER_API = "https://api.open-meteo.com/v1/"
     private const val AIR_API = "https://air-quality-api.open-meteo.com/v1/"
     private val gson = Gson()
+    private val cache = HashMap<String, Object>()
 
     private fun <T> request(api: String, endpoint: String, classOfT: Class<T>): CompletableFuture<T> {
-        val con = URL(api + endpoint).openConnection()
+        val url = api + endpoint
+        @Suppress("UNCHECKED_CAST")
+        if (cache.contains(url)) return CompletableFuture.completedFuture<T>(cache.get(url) as T)
+
+        val con = URL(url).openConnection()
         con.setRequestProperty("Accept", "application/json")
 
         return CompletableFuture.supplyAsync {
             val reader = BufferedReader(InputStreamReader(con.inputStream))
 
             val json = gson.fromJson(reader, classOfT)
-            Log.d("Network", "GET request \"$WEATHER_API$endpoint\": $json")
+            cache.put(url, json as Object)
+            Log.d("Network", "GET request \"$url\": $json")
             return@supplyAsync json
         }
     }
@@ -46,7 +52,7 @@ object WeatherAPI {
             val current = it.getAsJsonObject("current")
             return@thenApplyAsync Weather(
                 LocalDateTime.parse(current.get("time").asString).toLocalDate(),
-                current.get("temperature_2m")?.asDouble,
+                current.get("temperature_2m").asDouble,
                 current.get("is_day").asInt == 1,
                 WeatherType.getFromCode(current.get("weather_code")?.asInt)
             )
@@ -65,9 +71,9 @@ object WeatherAPI {
             for (i in 0 until time.size()) {
                 days.add(Weather(
                     LocalDate.parse(time.get(i).asString),
-                    temperature.get(i)?.asDouble,
+                    if (temperature.get(i).isJsonNull) null else temperature.get(i).asDouble,
                     true,
-                    WeatherType.getFromCode(weather.get(i)?.asInt)
+                    WeatherType.getFromCode(if (weather.get(i).isJsonNull) null else weather.get(i).asInt)
                 ))
             }
             return@thenApplyAsync days

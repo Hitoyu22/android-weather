@@ -7,15 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".activities.HomeActivity">
 
-    <ImageView
-        android:id="@+id/background_image"
-        android:layout_width="match_parent"
-        android:layout_height="498dp"
-        android:contentDescription="TODO"
-        app:layout_constraintEnd_toEndOf="parent"
+
+    <TextView
+        android:id="@+id/favorites_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/favorite_cities"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sunny" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/favorites_title"
+        app:layout_constraintTop_toBottomOf="@id/favorites_title">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/favorites_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
@@ -26,5 +45,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

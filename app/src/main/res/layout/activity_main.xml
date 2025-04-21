@@ -12,12 +12,13 @@
         android:id="@+id/background_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:contentDescription="TODO"
+        android:contentDescription="@string/weather"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/weatherForecastLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/sunny" />
 
     <LinearLayout
         android:id="@+id/weatherInfo"
@@ -38,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="Paris, France"
+            android:text="@string/loading"
             android:textColor="#000"
             android:textSize="18sp" />
 
@@ -47,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="27°C"
+            android:text="@string/loading_degrees"
             android:textColor="#000"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -57,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="7 juillet 2025"
+            android:text="@string/loading"
             android:textColor="#444" />
     </LinearLayout>
 
@@ -87,9 +88,9 @@
             android:id="@+id/airQualityText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="✅ Qualité de l’air excellente\nLa qualité de l’air est notée 5/5 aujourd’hui"
             android:layout_marginTop="12dp"
-            android:textAlignment="center"/>
+            android:text="@string/loading"
+            android:textAlignment="center" />
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

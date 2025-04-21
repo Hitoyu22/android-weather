@@ -1,10 +1,14 @@
 <resources>
-    <string name="app_name">Météo</string>
-    <string name="favorites">Favoris</string>
-    <string name="home">Accueil</string>
-    <string name="settings">Paramètres</string>
-    <string name="enable_dark_mode">Activer le mode sombre</string>
-    <string name="apply_settings">Appliquer les modifications</string>
-    <string name="loading">Chargement…</string>
-    <string name="air_quality">L\'indice de qualité de l’air est de {note}/5 aujourd’hui</string>
+    <string name="app_name">Weather</string>
+    <string name="favorites">Favorites</string>
+    <string name="home">Home</string>
+    <string name="enable_dark_mode">Enable dark mode</string>
+    <string name="apply_settings">Apply changes</string>
+    <string name="loading">Loading…</string>
+    <string name="air_quality">The air quality index is of {note}/5 today</string>
+    <string name="loading_degrees" translatable="false">…°C</string>
+    <string name="loading_icon" translatable="false">☀️</string>
+    <string name="weather">Weather</string>
+    <string name="settings">Setttings</string>
+    <string name="favorite_cities">Mes villes favorites</string>
 </resources>

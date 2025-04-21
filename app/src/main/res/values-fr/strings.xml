@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Météo</string>
+    <string name="favorites">Favoris</string>
+    <string name="home">Accueil</string>
+    <string name="weather">Météo</string>
+    <string name="settings">Paramètres</string>
+    <string name="enable_dark_mode">Activer le mode sombre</string>
+    <string name="apply_settings">Appliquer les modifications</string>
+    <string name="loading">Chargement…</string>
+    <string name="air_quality">L\'indice de qualité de l’air est de {note}/5 aujourd’hui</string>
+</resources>

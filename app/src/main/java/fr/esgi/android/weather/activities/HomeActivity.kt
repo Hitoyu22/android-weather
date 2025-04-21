@@ -55,7 +55,6 @@ class HomeActivity : WeatherActivity(R.layout.activity_main, R.id.home) {
         super.onCreate(savedInstanceState)
 
         background = findViewById<ImageView>(R.id.background_image)
-        background.setImageDrawable(getWeatherDrawable(WeatherType.SUNNY, true))
 
         city = findViewById<TextView>(R.id.cityText)
         city.text = getString(R.string.loading)
@@ -66,9 +65,6 @@ class HomeActivity : WeatherActivity(R.layout.activity_main, R.id.home) {
         forecast = findViewById<LinearLayout>(R.id.forecastList)
         (0 until 7).forEach { i ->
             val view = layoutInflater.inflate(R.layout.weather_forecast_item, forecast, false)
-            view.findViewById<TextView>(R.id.day).text = getString(R.string.loading)
-            view.findViewById<TextView>(R.id.icon).text = "☀️"
-            view.findViewById<TextView>(R.id.temperature).text = "...°C"
             forecast.addView(view)
         }
 
