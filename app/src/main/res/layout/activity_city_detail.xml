@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.HomeActivity">
+    tools:context=".activities.CityDetailActivity">
 
     <AutoCompleteTextView
         android:id="@+id/searchView"
@@ -91,7 +91,6 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:weightSum="5">
-
 
         </LinearLayout>
 

@@ -1,12 +1,14 @@
 package fr.esgi.android.weather.lists
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fr.esgi.android.weather.R
+import fr.esgi.android.weather.activities.CityDetailActivity
 import fr.esgi.android.weather.api.models.City
 import fr.esgi.android.weather.api.models.Weather
 
@@ -29,6 +31,13 @@ class FavoritesAdapter(val favorites: Map<City, Weather>, private val cities: Li
         holder.description.text = weather.weather.toString()
         holder.icon.text = weather.weather.icon
         holder.temperature.text = "${weather.temperature}°C"
+
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, CityDetailActivity::class.java)
+            intent.putExtra("CITY_NAME", city.name)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int = cities.size
