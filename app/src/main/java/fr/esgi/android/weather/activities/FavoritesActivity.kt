@@ -1,5 +1,7 @@
 package fr.esgi.android.weather.activities
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,35 +13,32 @@ import fr.esgi.android.weather.lists.FavoritesAdapter
 
 class FavoritesActivity : WeatherActivity(R.layout.activity_favorites, R.id.favorites) {
 
+    private lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        sharedPreferences = getSharedPreferences("WeatherAppPrefs", Context.MODE_PRIVATE)
+
         val favorites = HashMap<City, Weather>()
-        getCity(favorites, "Gagny")
-        getCity(favorites, "Lyon")
-        getCity(favorites, "Paris")
-        getCity(favorites, "Nation")
-        getCity(favorites, "Neuilly-Plaisance")
-        getCity(favorites, "Londres")
-        getCity(favorites, "New York City")
-        getCity(favorites, "Pékin")
-        getCity(favorites, "Tokyo")
-        getCity(favorites, "Berlin")
-        getCity(favorites, "Washington")
-        getCity(favorites, "Nowhere")
-        getCity(favorites, "Malaga")
-        getCity(favorites, "Beirut")
-        getCity(favorites, "Villemomble")
+        val favoriteCities = getFavoriteCities()
+
+        for (cityName in favoriteCities) {
+            getCity(favorites, cityName)
+        }
 
         val list = findViewById<RecyclerView>(R.id.favorites_list)
         list.layoutManager = LinearLayoutManager(this)
         list.adapter = FavoritesAdapter(favorites)
     }
 
-    private fun getCity(favorites: HashMap<City, Weather>, city: String) {
-        val city = WeatherAPI.searchCity(city).get().first()
+    private fun getCity(favorites: HashMap<City, Weather>, cityName: String) {
+        val city = WeatherAPI.searchCity(cityName).get().first()
         val weather = WeatherAPI.getCurrentWeather(city).get()
-        favorites.put(city, weather)
+        favorites[city] = weather
     }
 
+    private fun getFavoriteCities(): Set<String> {
+        return sharedPreferences.getStringSet("FavoriteCities", emptySet()) ?: emptySet()
+    }
 }

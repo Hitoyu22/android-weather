@@ -12,8 +12,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresPermission
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.get
-import androidx.core.view.size
 import fr.esgi.android.weather.R
 import fr.esgi.android.weather.WeatherType
 import fr.esgi.android.weather.api.WeatherAPI
@@ -50,7 +48,6 @@ class HomeActivity : WeatherActivity(R.layout.activity_main, R.id.home) {
     private lateinit var forecast: LinearLayout
     private lateinit var air: TextView
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -79,22 +76,27 @@ class HomeActivity : WeatherActivity(R.layout.activity_main, R.id.home) {
         val city = WeatherAPI.searchCity("Gagny").get().first()
         val weather = WeatherAPI.getCurrentWeather(city).get()
 
-        this.city.text = city.name + ", " + city.country
+        this.city.text = "${city.name}, ${city.country}"
         temperature.text = "${weather.temperature}°C"
 
         background.setImageDrawable(getWeatherDrawable(weather.weather, !weather.isDay))
 
-        val today = LocalDate.now();
+        val today = LocalDate.now()
         val day = today.dayOfWeek.value
         val start = today.minusDays(day - 1L)
         val end = today.plusDays(7L - day)
         val week = WeatherAPI.getWeather(city, start.toString(), end.toString()).get()
-        for (i in 0 until forecast.size) {
-            val day = week[i]
-            val view = forecast[i]
-            view.findViewById<TextView>(R.id.day).text = day.date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()) + "."
-            view.findViewById<TextView>(R.id.icon).text = day.weather.icon
-            view.findViewById<TextView>(R.id.temperature).text = "${day.temperature}°C"
+
+        forecast.removeAllViews()
+
+        for (day in week) {
+            if (day.temperature != null) {
+                val view = layoutInflater.inflate(R.layout.weather_forecast_item, forecast, false)
+                view.findViewById<TextView>(R.id.day).text = day.date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()) + "."
+                view.findViewById<TextView>(R.id.icon).text = day.weather.icon
+                view.findViewById<TextView>(R.id.temperature).text = "${day.temperature}°C"
+                forecast.addView(view)
+            }
         }
 
         val aqi = 20
@@ -104,7 +106,6 @@ class HomeActivity : WeatherActivity(R.layout.activity_main, R.id.home) {
 
     private fun getWeatherDrawable(weather: WeatherType, night: Boolean): Drawable? {
         val id = weather.getResourceID(night)
-
         return ResourcesCompat.getDrawable(resources, id, null)
     }
 }
