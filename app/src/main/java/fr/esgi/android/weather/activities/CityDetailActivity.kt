@@ -75,12 +75,17 @@ class CityDetailActivity : WeatherActivity(R.layout.activity_city_detail, R.id.h
         val start = today.minusDays(day - 1L)
         val end = today.plusDays(7L - day)
         val week = WeatherAPI.getWeather(city, start.toString(), end.toString()).get()
-        for (i in 0 until forecast.size) {
-            val day = week[i]
-            val view = forecast[i]
-            view.findViewById<TextView>(R.id.day).text = day.date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()) + "."
-            view.findViewById<TextView>(R.id.icon).text = day.weather.icon
-            view.findViewById<TextView>(R.id.temperature).text = "${day.temperature}°C"
+
+        forecast.removeAllViews()
+
+        for (day in week) {
+            if (day.temperature != null) {
+                val view = layoutInflater.inflate(R.layout.weather_forecast_item, forecast, false)
+                view.findViewById<TextView>(R.id.day).text = day.date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()) + "."
+                view.findViewById<TextView>(R.id.icon).text = day.weather.icon
+                view.findViewById<TextView>(R.id.temperature).text = "${day.temperature}°C"
+                forecast.addView(view)
+            }
         }
 
         val aqi = 20
