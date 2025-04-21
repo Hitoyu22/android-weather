@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.androidx.core)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.play.services.location)
 
     // keeping this here in case we have the time to use it
     // implementation("androidx.core:core-splashscreen:1.0.1")

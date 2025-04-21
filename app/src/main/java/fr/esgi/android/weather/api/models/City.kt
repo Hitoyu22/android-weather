@@ -9,3 +9,8 @@ data class City(
     @SerializedName("longitude") val longitude: Double
 
 )
+
+data class LocationInfo(
+    val city: String,
+    val country: String
+)
