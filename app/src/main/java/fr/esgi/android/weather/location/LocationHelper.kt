@@ -34,7 +34,6 @@ object LocationHelper {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            Log.w(TAG, "Permission not granted")
             callback.onLocationUnavailable()
             return
         }
@@ -42,10 +41,8 @@ object LocationHelper {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 if (location != null) {
-                    Log.d(TAG, "Last location found: ${location.latitude}, ${location.longitude}")
                     callback.onLocationResult(location)
                 } else {
-                    Log.w(TAG, "Last location is null, requesting update...")
                     val locationRequest = LocationRequest.Builder(
                         Priority.PRIORITY_HIGH_ACCURACY,
                         0
@@ -61,10 +58,8 @@ object LocationHelper {
                             override fun onLocationResult(result: LocationResult) {
                                 val loc = result.lastLocation
                                 if (loc != null) {
-                                    Log.d(TAG, "Location request success: ${loc.latitude}, ${loc.longitude}")
                                     callback.onLocationResult(loc)
                                 } else {
-                                    Log.e(TAG, "Location result is still null")
                                     callback.onLocationUnavailable()
                                 }
                             }
@@ -72,7 +67,6 @@ object LocationHelper {
                             override fun onLocationAvailability(availability: LocationAvailability) {
                                 super.onLocationAvailability(availability)
                                 if (!availability.isLocationAvailable) {
-                                    Log.e(TAG, "Location not available")
                                     callback.onLocationUnavailable()
                                 }
                             }
@@ -82,7 +76,6 @@ object LocationHelper {
                 }
             }
             .addOnFailureListener {
-                Log.e(TAG, "Error retrieving location: ${it.localizedMessage}")
                 callback.onLocationUnavailable()
             }
     }

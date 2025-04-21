@@ -73,7 +73,6 @@ abstract class WeatherActivity(val layout: Int, val navId: Int) : AppCompatActiv
 
         searchView.setOnItemClickListener { parent, view, position, id ->
             val selectedCity = parent.adapter.getItem(position) as City
-            Log.d("CitySelection", "Selected city: ${selectedCity.name}")
 
             val intent = Intent(this, CityDetailActivity::class.java)
             intent.putExtra("CITY_NAME", selectedCity.name)
