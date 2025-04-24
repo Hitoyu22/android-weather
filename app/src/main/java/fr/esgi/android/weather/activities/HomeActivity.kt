@@ -25,7 +25,6 @@ class HomeActivity : CityActivity(R.layout.activity_main) {
     private lateinit var notificationHelper: NotificationHelper
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private val locationPermissionCode = 1000
 
     private val notificationRunnable = object : Runnable {
         @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
@@ -51,21 +50,18 @@ class HomeActivity : CityActivity(R.layout.activity_main) {
 
         if (ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                locationPermissionCode
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                1000
             )
         } else fetchCity()
     }
 
-    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
+    @RequiresPermission(allOf = [Manifest.permission.ACCESS_COARSE_LOCATION])
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
