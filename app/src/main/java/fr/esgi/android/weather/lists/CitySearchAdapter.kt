@@ -1,4 +1,4 @@
-package fr.esgi.android.weather.search
+package fr.esgi.android.weather.lists
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,17 +12,13 @@ import fr.esgi.android.weather.R
 import fr.esgi.android.weather.api.WeatherAPI
 import fr.esgi.android.weather.api.models.City
 
-class CityAdapter(context: Context) : ArrayAdapter<City>(context, R.layout.item_city), Filterable {
+class CitySearchAdapter(context: Context) : ArrayAdapter<City>(context, R.layout.item_city), Filterable {
 
     private var cities: List<City> = emptyList()
 
-    override fun getCount(): Int {
-        return cities.size
-    }
+    override fun getCount(): Int = cities.size.coerceAtMost(3)
 
-    override fun getItem(position: Int): City? {
-        return cities[position]
-    }
+    override fun getItem(position: Int): City? = cities[position]
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_city, parent, false)
@@ -37,18 +33,17 @@ class CityAdapter(context: Context) : ArrayAdapter<City>(context, R.layout.item_
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val results = FilterResults()
                 if (constraint != null && constraint.length > 2) {
-                    val futureCities = WeatherAPI.searchCity(constraint.toString())
+                    val futureCities = WeatherAPI.searchCities(constraint.toString())
                     val cities = futureCities.get()
-                    val limitedCities = cities.take(3)
-                    results.values = limitedCities
-                    results.count = limitedCities.size
+                    results.values = cities
+                    results.count = cities.size
                 }
                 return results
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 if (results != null && results.count > 0) {
-                    cities = results.values as List<*> as List<City>
+                    cities = results.values as List<City>
                     notifyDataSetChanged()
                 } else {
                     cities = emptyList()

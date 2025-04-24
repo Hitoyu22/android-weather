@@ -10,4 +10,7 @@
     <string name="loading">Chargement…</string>
     <string name="air_quality">L\'indice de qualité de l’air est de {note}/5 aujourd’hui</string>
     <string name="favorite_cities">Mes villes préférées</string>
+    <string name="unknown">Inconnu</string>
+    <string name="remove_favorite">Retirer des favoris</string>
+    <string name="add_favorite">Ajouter aux favoris</string>
 </resources>

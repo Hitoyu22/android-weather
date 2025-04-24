@@ -11,4 +11,7 @@
     <string name="weather">Weather</string>
     <string name="settings">Setttings</string>
     <string name="favorite_cities">My favorite cities</string>
+    <string name="unknown">Unknown</string>
+    <string name="remove_favorite">Remove Favorite</string>
+    <string name="add_favorite">Add Favorite</string>
 </resources>

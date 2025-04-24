@@ -12,7 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.navigation.NavigationBarView
 import fr.esgi.android.weather.R
 import fr.esgi.android.weather.api.models.City
-import fr.esgi.android.weather.search.CityAdapter
+import fr.esgi.android.weather.lists.CitySearchAdapter
 import kotlin.reflect.KClass
 
 abstract class WeatherActivity(val layout: Int, val navId: Int) : AppCompatActivity() {
@@ -68,15 +68,17 @@ abstract class WeatherActivity(val layout: Int, val navId: Int) : AppCompatActiv
 
     protected fun configureAutoCompleteTextView() {
         val searchView: AutoCompleteTextView = findViewById(R.id.searchView)
-        val adapter = CityAdapter(this)
+        val adapter = CitySearchAdapter(this)
         searchView.setAdapter(adapter)
 
         searchView.setOnItemClickListener { parent, view, position, id ->
-            val selectedCity = parent.adapter.getItem(position) as City
+            val city = parent.adapter.getItem(position) as City
 
-            val intent = Intent(this, CityDetailActivity::class.java)
-            intent.putExtra("CITY_NAME", selectedCity.name)
-            startActivity(intent)
+            Intent(this, CityDetailActivity::class.java).apply {
+                putExtra("CITY_LAT", city.latitude)
+                putExtra("CITY_LON", city.longitude)
+                startActivity(this)
+            }
         }
     }
 }

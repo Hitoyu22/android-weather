@@ -34,9 +34,11 @@ class FavoritesAdapter(val favorites: Map<City, Weather>, private val cities: Li
 
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
-            val intent = Intent(context, CityDetailActivity::class.java)
-            intent.putExtra("CITY_NAME", city.name)
-            context.startActivity(intent)
+            Intent(context, CityDetailActivity::class.java).apply {
+                putExtra("CITY_LAT", city.latitude)
+                putExtra("CITY_LON", city.longitude)
+                context.startActivity(this)
+            }
         }
     }
 

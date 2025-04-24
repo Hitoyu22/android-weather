@@ -1,22 +1,15 @@
 package fr.esgi.android.weather.activities
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
 import fr.esgi.android.weather.R
-import androidx.core.content.edit
+import fr.esgi.android.weather.WeatherApp
 
 class SettingsActivity : WeatherActivity(R.layout.activity_settings, R.id.settings) {
 
-    companion object {
-        const val DARK_MODE_KEY = "night_mode_enabled"
-    }
-
-    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var darkMode: SwitchCompat
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,16 +18,12 @@ class SettingsActivity : WeatherActivity(R.layout.activity_settings, R.id.settin
             savePreferences()
         }
 
-        sharedPreferences = getSharedPreferences("app_preferences", MODE_PRIVATE)
-
         darkMode = findViewById(R.id.dark_mode_switch)
-        darkMode.isChecked = sharedPreferences.getBoolean(DARK_MODE_KEY, false)
+        darkMode.isChecked = (application as WeatherApp).isDarkMode()
     }
 
     private fun savePreferences() {
-        sharedPreferences.edit(true) {
-            putBoolean(DARK_MODE_KEY, darkMode.isChecked)
-        }
+        (application as WeatherApp).setDarkMode(darkMode.isChecked)
 
         AppCompatDelegate.setDefaultNightMode(
             if (darkMode.isChecked) AppCompatDelegate.MODE_NIGHT_YES

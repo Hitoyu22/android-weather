@@ -5,7 +5,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import fr.esgi.android.weather.WeatherType
 import fr.esgi.android.weather.api.models.City
-import fr.esgi.android.weather.api.models.LocationInfo
 import fr.esgi.android.weather.api.models.Weather
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -17,7 +16,7 @@ import java.util.concurrent.CompletableFuture
 object WeatherAPI {
 
     private const val GEO_API = "https://geocoding-api.open-meteo.com/v1/"
-    private const val CITI_API = "https://nominatim.openstreetmap.org"
+    private const val CITY_API = "https://nominatim.openstreetmap.org"
     private const val WEATHER_API = "https://api.open-meteo.com/v1/"
     private const val AIR_API = "https://air-quality-api.open-meteo.com/v1/"
     private val gson = Gson()
@@ -30,6 +29,7 @@ object WeatherAPI {
 
         val con = URL(url).openConnection()
         con.setRequestProperty("Accept", "application/json")
+        con.setRequestProperty("User-Agent", "ESGI-Weather-App/1.0")
 
         return CompletableFuture.supplyAsync {
             val reader = BufferedReader(InputStreamReader(con.inputStream))
@@ -37,11 +37,11 @@ object WeatherAPI {
             val json = gson.fromJson(reader, classOfT)
             cache.put(url, json as Object)
             Log.d("Network", "GET request \"$url\": $json")
-            return@supplyAsync json
+            json
         }
     }
 
-    fun searchCity(city: String): CompletableFuture<List<City>> {
+    fun searchCities(city: String): CompletableFuture<List<City>> {
         return request(GEO_API, "search?name=$city", JsonObject::class.java).thenApplyAsync {
             it.getAsJsonArray("results").map {
                 gson.fromJson(it, City::class.java)
@@ -49,10 +49,27 @@ object WeatherAPI {
         }
     }
 
+    fun getCityFromCoordinates(latitude: Double, longitude: Double): CompletableFuture<City> {
+        return request(CITY_API, "/reverse?lat=$latitude&lon=$longitude&format=json&accept-language=fr", JsonObject::class.java).thenApplyAsync { json ->
+            val address = json.getAsJsonObject("address")
+
+            val city = when {
+                address.has("city") -> address.get("city").asString
+                address.has("city_district") -> address.get("city_district").asString
+                address.has("town") -> address.get("town").asString
+                address.has("village") -> address.get("village").asString
+                else -> null
+            }
+
+            val country: String? = if (address.has("country")) address.get("country").asString else null
+            City(city, country, latitude, longitude)
+        }
+    }
+
     fun getCurrentWeather(city: City): CompletableFuture<Weather> {
         return request(WEATHER_API, "forecast?latitude=${city.latitude}&longitude=${city.longitude}&current=temperature_2m,weather_code,is_day&models=meteofrance_seamless", JsonObject::class.java).thenApplyAsync {
             val current = it.getAsJsonObject("current")
-            return@thenApplyAsync Weather(
+            Weather(
                 LocalDateTime.parse(current.get("time").asString).toLocalDate(),
                 current.get("temperature_2m").asDouble,
                 current.get("is_day").asInt == 1,
@@ -78,69 +95,13 @@ object WeatherAPI {
                     WeatherType.getFromCode(if (weather.get(i).isJsonNull) null else weather.get(i).asInt)
                 ))
             }
-            return@thenApplyAsync days
+            days
         }
     }
 
-    fun getCurrentWeatherWithCoordinates(latitude: Double, longitude: Double): CompletableFuture<Weather> {
-        return request(WEATHER_API, "forecast?latitude=$latitude&longitude=$longitude&current=temperature_2m,weather_code,is_day&models=meteofrance_seamless", JsonObject::class.java).thenApplyAsync {
-            val current = it.getAsJsonObject("current")
-            return@thenApplyAsync Weather(
-                LocalDateTime.parse(current.get("time").asString).toLocalDate(),
-                current.get("temperature_2m").asDouble,
-                current.get("is_day").asInt == 1,
-                WeatherType.getFromCode(current.get("weather_code")?.asInt)
-            )
-        }
-    }
-
-    fun getWeatherWithCoordinates(latitude: Double, longitude: Double, start: String, end: String): CompletableFuture<List<Weather>> {
-        return request(WEATHER_API, "forecast?latitude=$latitude&longitude=$longitude&daily=temperature_2m_max,weather_code&models=meteofrance_seamless&start_date=$start&end_date=$end", JsonObject::class.java).thenApplyAsync {
-            val daily = it.getAsJsonObject("daily")
-
-            val time = daily.getAsJsonArray("time")
-            val weather = daily.getAsJsonArray("weather_code")
-            val temperature = daily.getAsJsonArray("temperature_2m_max")
-
-            val days = ArrayList<Weather>()
-            for (i in 0 until time.size()) {
-                days.add(Weather(
-                    LocalDate.parse(time.get(i).asString),
-                    if (temperature.get(i).isJsonNull) null else temperature.get(i).asDouble,
-                    true,
-                    WeatherType.getFromCode(if (weather.get(i).isJsonNull) null else weather.get(i).asInt)
-                ))
-            }
-            return@thenApplyAsync days
-        }
-    }
-
-    fun getCityNameWithCoordinates(latitude: Double, longitude: Double): CompletableFuture<LocationInfo> {
-        val endpoint = "/reverse?lat=$latitude&lon=$longitude&format=json&accept-language=fr"
-        val url = CITI_API + endpoint
-
-        val con = URL(url).openConnection()
-        con.setRequestProperty("Accept", "application/json")
-        con.setRequestProperty("User-Agent", "ESGI-Weather-App/1.0")
-
-        return CompletableFuture.supplyAsync {
-            val reader = BufferedReader(InputStreamReader(con.getInputStream()))
-            val json = gson.fromJson(reader, JsonObject::class.java)
-            val address = json.getAsJsonObject("address")
-
-            val city = when {
-                address.has("city") -> address.get("city").asString
-                address.has("city_district") -> address.get("city_district").asString
-                address.has("town") -> address.get("town").asString
-                address.has("village") -> address.get("village").asString
-                else -> "Inconnu"
-            }
-
-            val country = if (address.has("country")) address.get("country").asString else "Inconnu"
-
-            Log.d("Network", "GET city/country from coords \"$url\": $city, $country")
-            LocationInfo(city, country)
-        }
+    fun getAirQuality(city: City): CompletableFuture<Int> {
+        //request(AIR_API, "", JsonObject::class.java).thenApplyAsync {}
+        return CompletableFuture.completedFuture(20)
     }
 
 }

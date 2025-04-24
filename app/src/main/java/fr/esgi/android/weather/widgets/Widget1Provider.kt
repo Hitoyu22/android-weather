@@ -1,6 +1,5 @@
 package fr.esgi.android.weather.widgets
 
-import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -10,8 +9,6 @@ import com.google.android.gms.location.LocationServices
 import fr.esgi.android.weather.R
 import fr.esgi.android.weather.api.WeatherAPI
 import fr.esgi.android.weather.location.LocationHelper
-import android.Manifest
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
@@ -22,7 +19,6 @@ class Widget1Provider : AppWidgetProvider() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    @SuppressLint("RemoteViewLayout")
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
@@ -33,24 +29,13 @@ class Widget1Provider : AppWidgetProvider() {
             views.setTextViewText(R.id.location, defaultLocation)
             views.setTextViewText(R.id.temperature, defaultTemperature)
 
-            if (ContextCompat.checkSelfPermission(
-                    context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                LocationHelper.getLastKnownLocation(
-                    context,
-                    fusedLocationClient,
-                    object : LocationHelper.LocationCallbackListener {
-                        override fun onLocationResult(location: Location) {
-                            fetchWeatherAndUpdateWidget(context, views, appWidgetManager, appWidgetId, location.latitude, location.longitude)
-                        }
+            LocationHelper.getLastKnownLocation(context, fusedLocationClient,
+                object : LocationHelper.LocationCallbackListener {
+                    override fun onLocationResult(location: Location) = fetchWeatherAndUpdateWidget(context, views, appWidgetManager, appWidgetId, location.latitude, location.longitude)
+                    override fun onLocationUnavailable() = fetchWeatherAndUpdateWidget(context, views, appWidgetManager, appWidgetId, 48.8566, 2.3522)
+                }
+            )
 
-                        override fun onLocationUnavailable() {
-                            fetchWeatherAndUpdateWidget(context, views, appWidgetManager, appWidgetId, 48.8566, 2.3522)
-                        }
-                    }
-                )
-            } else {
-                fetchWeatherAndUpdateWidget(context, views, appWidgetManager, appWidgetId, 48.8566, 2.3522)
-            }
         }
     }
 
@@ -62,10 +47,10 @@ class Widget1Provider : AppWidgetProvider() {
         latitude: Double,
         longitude: Double
     ) {
-        val weather = WeatherAPI.getCurrentWeatherWithCoordinates(latitude, longitude).get()
-        val locationInfo = WeatherAPI.getCityNameWithCoordinates(latitude, longitude).get()
+        val city = WeatherAPI.getCityFromCoordinates(latitude, longitude).get()
+        val weather = WeatherAPI.getCurrentWeather(city).get()
 
-        views.setTextViewText(R.id.location, locationInfo.city)
+        views.setTextViewText(R.id.location, city.name)
         views.setTextViewText(R.id.temperature, "${weather.temperature}°C")
 
         val backgroundDrawable = getWeatherDrawable(context, weather.weather, !weather.isDay)
