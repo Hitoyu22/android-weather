@@ -76,7 +76,7 @@ abstract class CityActivity(layout0: Int) : WeatherActivity(layout0, R.id.home) 
         }
 
         val aqi = WeatherAPI.getAirQuality(city).get()
-        val note = (100 - aqi) / 20
+        val note = (100 - aqi) / 20.0
         air.text = air.text.toString().replace("{note}", "$note")
 
         return weather

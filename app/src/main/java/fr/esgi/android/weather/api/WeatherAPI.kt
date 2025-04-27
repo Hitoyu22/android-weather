@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture
 object WeatherAPI {
 
     private const val GEO_API = "https://geocoding-api.open-meteo.com/v1/"
-    private const val CITY_API = "https://nominatim.openstreetmap.org"
+    private const val CITY_API = "https://nominatim.openstreetmap.org/"
     private const val WEATHER_API = "https://api.open-meteo.com/v1/"
     private const val AIR_API = "https://air-quality-api.open-meteo.com/v1/"
     private val gson = Gson()
@@ -50,7 +50,7 @@ object WeatherAPI {
     }
 
     fun getCityFromCoordinates(latitude: Double, longitude: Double): CompletableFuture<City> {
-        return request(CITY_API, "/reverse?lat=$latitude&lon=$longitude&format=json&accept-language=fr", JsonObject::class.java).thenApplyAsync { json ->
+        return request(CITY_API, "reverse?lat=$latitude&lon=$longitude&format=json&accept-language=fr", JsonObject::class.java).thenApplyAsync { json ->
             val address = json.getAsJsonObject("address")
 
             val city = when {
@@ -100,8 +100,9 @@ object WeatherAPI {
     }
 
     fun getAirQuality(city: City): CompletableFuture<Int> {
-        //request(AIR_API, "", JsonObject::class.java).thenApplyAsync {}
-        return CompletableFuture.completedFuture(20)
+        return request(AIR_API, "air-quality?latitude=${city.latitude}&longitude=${city.longitude}&current=european_aqi&forecast_days=1", JsonObject::class.java).thenApplyAsync { json ->
+            json.getAsJsonObject("current").get("european_aqi").asInt
+        }
     }
 
 }
