@@ -17,8 +17,8 @@ import fr.esgi.android.weather.R
 class NotificationHelper(private val context: Context) {
 
     companion object {
-        private val CHANNEL_ID = "weather_alerts"
-        private var sent = false;
+        private const val CHANNEL_ID = "weather_alerts"
+        private var sent = false
     }
 
     init {

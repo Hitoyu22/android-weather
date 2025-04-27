@@ -43,6 +43,7 @@ class CitySearchAdapter(context: Context) : ArrayAdapter<City>(context, R.layout
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 if (results != null && results.count > 0) {
+                    @Suppress("UNCHECKED_CAST")
                     cities = results.values as List<City>
                     notifyDataSetChanged()
                 } else {

@@ -2,24 +2,19 @@ package fr.esgi.android.weather.widgets
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import fr.esgi.android.weather.R
 
-class Widget1RemoteViewsFactory(private val context: Context, private val intent: Intent) : RemoteViewsService.RemoteViewsFactory {
+class Widget1RemoteViewsFactory(private val context: Context) : RemoteViewsService.RemoteViewsFactory {
 
     private var dataList: List<String> = listOf("Paris, France", "15°C")
 
-    override fun onCreate() {
-    }
+    override fun onCreate() {}
 
-    override fun onDestroy() {
-    }
+    override fun onDestroy() {}
 
-    override fun getCount(): Int {
-        return dataList.size
-    }
+    override fun getCount(): Int = dataList.size
 
     @SuppressLint("RemoteViewLayout")
     override fun getViewAt(position: Int): RemoteViews {
@@ -29,21 +24,13 @@ class Widget1RemoteViewsFactory(private val context: Context, private val intent
         return views
     }
 
-    override fun getLoadingView(): RemoteViews? {
-        return null
-    }
+    override fun getLoadingView(): RemoteViews? = null
 
-    override fun getViewTypeCount(): Int {
-        return 1
-    }
+    override fun getViewTypeCount(): Int = 1
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun getItemId(position: Int): Long = position.toLong()
 
-    override fun hasStableIds(): Boolean {
-        return true
-    }
+    override fun hasStableIds(): Boolean = true
 
     override fun onDataSetChanged() {
         dataList = listOf("Paris, France", "15°C")
