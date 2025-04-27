@@ -41,6 +41,7 @@ class WeatherApp : Application() {
     }
 
     fun setDarkMode(darkMode: Boolean) {
+        this.darkMode = darkMode
         preferences.edit(true) {
             putBoolean(DARK_MODE_KEY, darkMode)
         }
