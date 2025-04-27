@@ -15,10 +15,14 @@ import androidx.annotation.RequiresPermission
 import fr.esgi.android.weather.R
 
 class NotificationHelper(private val context: Context) {
-    private val channelId = "weather_alerts"
+
+    companion object {
+        private val CHANNEL_ID = "weather_alerts"
+        private var sent = false;
+    }
 
     init {
-        val channel = NotificationChannel(channelId, "Weather Alerts", NotificationManager.IMPORTANCE_HIGH)
+        val channel = NotificationChannel(CHANNEL_ID, "Weather Alerts", NotificationManager.IMPORTANCE_HIGH)
         val manager = context.getSystemService(NotificationManager::class.java)
         manager?.createNotificationChannel(channel)
 
@@ -35,7 +39,9 @@ class NotificationHelper(private val context: Context) {
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     fun sendNotification(title: String, message: String) {
-        val notification = NotificationCompat.Builder(context, channelId)
+        if (sent) return
+        sent = true
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(title)
             .setContentText(message)

@@ -5,9 +5,6 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.widget.ImageView
 import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
@@ -22,23 +19,7 @@ import fr.esgi.android.weather.location.LocationHelper
 
 class HomeActivity : CityActivity(R.layout.activity_main) {
 
-    private lateinit var notificationHelper: NotificationHelper
-    private val handler = Handler(Looper.getMainLooper())
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
-    private val notificationRunnable = object : Runnable {
-        @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-        override fun run() {
-            Log.d("Notification", "Sending Notification")
-            notificationHelper.sendNotification(
-                "Weather Alert",
-                "" // "It's time for a weather update! " + weather.weather.joinToString(", ") { it.main }
-            )
-            Log.d("Notification", "Notification sent")
-            handler.postDelayed(this, 60000)
-        }
-    }
-
     private lateinit var background: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,9 +55,16 @@ class HomeActivity : CityActivity(R.layout.activity_main) {
     private fun fetchCity() {
         LocationHelper.getLastKnownLocation(this, fusedLocationClient,
             object : LocationHelper.LocationCallbackListener {
+
+                @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
                 override fun onLocationResult(location: Location) {
                     city = getCity(location.latitude, location.longitude)
-                    fetchWeather()
+                    val weather = fetchWeather()
+
+                    NotificationHelper(this@HomeActivity).sendNotification(
+                        "Weather",
+                        city.name + ": " + weather.temperature + "°C"
+                    )
                 }
                 override fun onLocationUnavailable() {
                     city = getCity(-1.0, -1.0)
