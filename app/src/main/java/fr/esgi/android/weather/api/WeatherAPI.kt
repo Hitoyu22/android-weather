@@ -58,6 +58,7 @@ object WeatherAPI {
                 address.has("city_district") -> address.get("city_district").asString
                 address.has("town") -> address.get("town").asString
                 address.has("village") -> address.get("village").asString
+                address.has("hamlet") -> address.get("hamlet").asString
                 else -> null
             }
 
