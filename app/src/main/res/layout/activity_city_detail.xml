@@ -23,7 +23,7 @@
         android:id="@+id/mapview"
         android:layout_width="@dimen/available_space"
         android:layout_height="@dimen/available_space"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/weatherForecastLayout" />
