@@ -7,23 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".activities.HomeActivity">
 
-
     <TextView
         android:id="@+id/favorites_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginStart="@dimen/favorites_marginStart"
+        android:layout_marginTop="@dimen/favorites_marginTop"
         android:text="@string/favorite_cities"
-        android:textSize="24sp"
+        android:textSize="@dimen/title_size"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="32dp"
+        android:layout_width="@dimen/available_space"
+        android:layout_height="@dimen/available_space"
+        android:layout_marginEnd="@dimen/favorite_list_margin"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/favorites_title"
@@ -42,7 +41,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 

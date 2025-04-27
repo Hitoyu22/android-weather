@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Météo</string>
-    <string name="favorites">Favoris</string>
-    <string name="home">Accueil</string>
     <string name="weather">Météo</string>
+    <string name="search_city">Search a city</string>
+    <string name="unknown">Inconnu</string>
+
+    <string name="loading">Chargement…</string>
+
+    <string name="home">Accueil</string>
+    <string name="air_quality">L\'indice de qualité de l’air est de {note}/5 aujourd’hui</string>
+
+    <string name="favorites">Favoris</string>
+    <string name="favorite_cities">Mes villes préférées</string>
+    <string name="add_favorite">Ajouter aux favoris</string>
+    <string name="remove_favorite">Retirer des favoris</string>
+
     <string name="settings">Paramètres</string>
     <string name="enable_dark_mode">Activer le mode sombre</string>
     <string name="apply_settings">Appliquer les modifications</string>
-    <string name="loading">Chargement…</string>
-    <string name="air_quality">L\'indice de qualité de l’air est de {note}/5 aujourd’hui</string>
-    <string name="favorite_cities">Mes villes préférées</string>
-    <string name="unknown">Inconnu</string>
-    <string name="remove_favorite">Retirer des favoris</string>
-    <string name="add_favorite">Ajouter aux favoris</string>
 </resources>

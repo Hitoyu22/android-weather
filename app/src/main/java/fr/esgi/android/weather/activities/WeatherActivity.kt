@@ -7,8 +7,6 @@ import android.view.MenuItem
 import android.widget.AutoCompleteTextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.navigation.NavigationBarView
 import fr.esgi.android.weather.R
 import fr.esgi.android.weather.api.models.City
@@ -21,11 +19,6 @@ abstract class WeatherActivity(val layout: Int, val navId: Int) : AppCompatActiv
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(layout)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         val navigation = findViewById<NavigationBarView>(R.id.navigation)
         navigation.selectedItemId = navId

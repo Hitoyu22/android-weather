@@ -10,19 +10,19 @@
 
     <AutoCompleteTextView
         android:id="@+id/searchView"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/available_space"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="Rechercher une ville"
-        android:minHeight="48dp"
+        android:layout_margin="@dimen/margin"
+        android:hint="@string/search_city"
+        android:minHeight="@dimen/search_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/background_image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/available_space"
+        android:layout_height="@dimen/available_space"
         android:contentDescription="@string/weather"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@id/weatherForecastLayout"
@@ -35,42 +35,39 @@
         android:id="@+id/weatherInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="@dimen/weather_margin"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/weatherForecastLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.187">
+        app:layout_constraintVertical_bias="@dimen/weather_bias">
 
         <TextView
             android:id="@+id/cityText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="@string/loading"
-            android:textColor="#000"
-            android:textSize="18sp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/city_size" />
 
         <TextView
             android:id="@+id/currentTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginVertical="@dimen/temperature_margin"
             android:text="@string/loading_degrees"
-            android:textColor="#000"
-            android:textSize="40sp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/main_text_size"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/dateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/loading"
-            android:textColor="#444" />
+            android:text="@string/loading" />
     </LinearLayout>
 
     <LinearLayout
@@ -78,8 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:elevation="10dp"
-        android:padding="16dp"
+        android:padding="@dimen/padding"
         app:layout_constraintBottom_toTopOf="@id/navigation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -89,17 +85,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="5">
-
-
-        </LinearLayout>
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/airQualityText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/air_quality_margin"
             android:text="@string/loading"
             android:textAlignment="center" />
     </LinearLayout>
