@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="widget_background_start">#47BFDF</color>
     <color name="widget_background_end">#4A91FF</color>
+    <color name="divider">#2C2C2C</color>
 </resources>

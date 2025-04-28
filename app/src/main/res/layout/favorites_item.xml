@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/favorites_padding">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/available_space"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="@dimen/favorite_delete_margin"
+        android:weightSum="@integer/favorite_linear_weight_sum">
 
         <TextView
             android:id="@+id/city"
@@ -27,23 +30,38 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal"
+        android:gravity="end">
 
         <TextView
             android:id="@+id/icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/loading_icon"
-            android:textSize="@dimen/weather_icon_size" />
+            android:textSize="@dimen/weather_icon_size"
+            android:layout_gravity="center_vertical"/>
 
         <TextView
             android:id="@+id/temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/loading_degrees" />
+            android:text="@string/loading_degrees"
+            android:layout_gravity="center_vertical"/>
+
+        <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/favorite_delete_margin"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/remove_favorite"
+            android:src="@android:drawable/ic_menu_delete"
+            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

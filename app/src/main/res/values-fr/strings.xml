@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Météo</string>
     <string name="weather">Météo</string>
-    <string name="search_city">Search a city</string>
+    <string name="search_city">Chercher un ville</string>
     <string name="unknown">Inconnu</string>
 
     <string name="loading">Chargement…</string>
@@ -16,6 +16,16 @@
     <string name="remove_favorite">Retirer des favoris</string>
 
     <string name="settings">Paramètres</string>
-    <string name="enable_dark_mode">Activer le mode sombre</string>
-    <string name="apply_settings">Appliquer les modifications</string>
+    <string name="theme">Thème</string>
+    <string name="language">Langue</string>
+    <string name="select_theme">Sélectionner un thème</string>
+    <string name="select_language">Sélectionner une langue</string>
+    <string name="light_mode">Clair</string>
+    <string name="dark_mode">Sombre</string>
+    <string name="system_default">Par défaut</string>
+    <string name="about">À propos</string>
+    <string name="about_message">Weather App vous permet de consulter les prévisions météo de vos villes favorites. Fonctions incluses : température en temps réel, indice de qualité de l\'air et personnalisation du thème (clair/sombre). Vous pouvez également changer la langue de l’application entre français et anglais.</string>
+    <string name="language_french">Français</string>
+    <string name="language_english">Anglais</string>
+
 </resources>
