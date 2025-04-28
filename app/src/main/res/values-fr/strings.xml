@@ -23,5 +23,9 @@
     <string name="light_mode">Clair</string>
     <string name="dark_mode">Sombre</string>
     <string name="system_default">Par défaut</string>
+    <string name="about">À propos</string>
+    <string name="about_message">Weather App vous permet de consulter les prévisions météo de vos villes favorites. Fonctions incluses : température en temps réel, indice de qualité de l\'air et personnalisation du thème (clair/sombre). Vous pouvez également changer la langue de l’application entre français et anglais.</string>
+    <string name="language_french">Français</string>
+    <string name="language_english">Anglais</string>
 
 </resources>

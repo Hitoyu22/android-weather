@@ -1,28 +1,31 @@
 package fr.esgi.android.weather.activities
 
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import fr.esgi.android.weather.R
-import fr.esgi.android.weather.WeatherApp
 import java.util.Locale
 
 class SettingsActivity : WeatherActivity(R.layout.activity_settings, R.id.settings) {
 
     private lateinit var themeSetting: TextView
     private lateinit var languageSetting: TextView
+    private lateinit var aboutSetting: TextView
 
-    private val languageFrench = "Français"
-    private val languageEnglish = "English"
+    private lateinit var languageFrench: String
+    private lateinit var languageEnglish: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        languageFrench = getString(R.string.language_french)
+        languageEnglish = getString(R.string.language_english)
+
         themeSetting = findViewById(R.id.theme_setting)
         languageSetting = findViewById(R.id.language_setting)
+        aboutSetting = findViewById(R.id.about_setting)
 
         themeSetting.setOnClickListener {
             showThemeDialog()
@@ -30,6 +33,10 @@ class SettingsActivity : WeatherActivity(R.layout.activity_settings, R.id.settin
 
         languageSetting.setOnClickListener {
             showLanguageDialog()
+        }
+
+        aboutSetting.setOnClickListener {
+            showAboutDialog()
         }
     }
 
@@ -63,6 +70,14 @@ class SettingsActivity : WeatherActivity(R.layout.activity_settings, R.id.settin
                     1 -> setLanguage("en")
                 }
             }
+            .show()
+    }
+
+    private fun showAboutDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.about)
+            .setMessage(R.string.about_message)
+            .setPositiveButton(android.R.string.ok, null)
             .show()
     }
 

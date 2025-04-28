@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/settings_section_spacing"
                 app:cardCornerRadius="@dimen/settings_dialog_corner_radius"
-                app:cardElevation="4dp">
+                app:cardElevation="@dimen/settings_card_view_padding">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -49,7 +49,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/settings_view_layout_height"
                         android:background="@color/divider" />
 
                     <TextView
@@ -57,6 +57,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/language"
+                        android:textSize="@dimen/text_size"
+                        android:paddingTop="@dimen/settings_item_padding"
+                        android:paddingBottom="@dimen/settings_item_padding" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/settings_view_layout_height"
+                        android:background="@color/divider" />
+
+                    <TextView
+                        android:id="@+id/about_setting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about"
                         android:textSize="@dimen/text_size"
                         android:paddingTop="@dimen/settings_item_padding"
                         android:paddingBottom="@dimen/settings_item_padding" />

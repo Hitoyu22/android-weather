@@ -24,5 +24,9 @@
     <string name="light_mode">Light</string>
     <string name="dark_mode">Dark</string>
     <string name="system_default">System Default</string>
+    <string name="about">About</string>
+    <string name="about_message">Weather App allows you to view weather forecasts for your favorite cities. Features include real-time temperature, air quality index, and theme customization (light/dark). You can also change the app’s language between French and English.</string>
+    <string name="language_french">French</string>
+    <string name="language_english">English</string>
 
 </resources>
