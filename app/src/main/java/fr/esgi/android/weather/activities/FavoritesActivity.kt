@@ -17,14 +17,15 @@ class FavoritesActivity : WeatherActivity(R.layout.activity_favorites, R.id.favo
 
         val favorites = HashMap<City, Weather>()
 
-        (application as WeatherApp).getFavorites().forEach { city ->
+        val app = application as WeatherApp
+
+        app.getFavorites().forEach { city ->
             val weather = WeatherAPI.getCurrentWeather(city).get()
             favorites[city] = weather
         }
 
         val list = findViewById<RecyclerView>(R.id.favorites_list)
         list.layoutManager = LinearLayoutManager(this)
-        list.adapter = FavoritesAdapter(favorites)
+        list.adapter = FavoritesAdapter(favorites, app = app)
     }
-
 }

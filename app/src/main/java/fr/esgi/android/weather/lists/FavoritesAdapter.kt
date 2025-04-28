@@ -5,14 +5,20 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fr.esgi.android.weather.R
 import fr.esgi.android.weather.activities.CityDetailActivity
 import fr.esgi.android.weather.api.models.City
 import fr.esgi.android.weather.api.models.Weather
+import fr.esgi.android.weather.WeatherApp
 
-class FavoritesAdapter(val favorites: Map<City, Weather>, private val cities: List<City> = ArrayList(favorites.keys)) : RecyclerView.Adapter<FavoritesAdapter.MainViewHolder>() {
+class FavoritesAdapter(
+    private val favorites: MutableMap<City, Weather>,
+    private val cities: MutableList<City> = ArrayList(favorites.keys),
+    private val app: WeatherApp
+) : RecyclerView.Adapter<FavoritesAdapter.MainViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         return MainViewHolder(
@@ -32,6 +38,18 @@ class FavoritesAdapter(val favorites: Map<City, Weather>, private val cities: Li
         holder.icon.text = weather.weather.icon
         holder.temperature.text = "${weather.temperature}°C"
 
+        holder.deleteButton.setOnClickListener {
+            favorites.remove(city)
+            cities.removeAt(position)
+
+            val updatedFavorites = app.getFavorites().toMutableList().apply {
+                remove(city)
+            }
+            app.setFavorites(updatedFavorites)
+
+            notifyItemRemoved(position)
+        }
+
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
             Intent(context, CityDetailActivity::class.java).apply {
@@ -45,9 +63,10 @@ class FavoritesAdapter(val favorites: Map<City, Weather>, private val cities: Li
     override fun getItemCount(): Int = cities.size
 
     inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val city: TextView = view.findViewById<TextView>(R.id.city)
-        val description: TextView = view.findViewById<TextView>(R.id.description)
-        val icon: TextView = view.findViewById<TextView>(R.id.icon)
-        val temperature: TextView = view.findViewById<TextView>(R.id.temperature)
+        val city: TextView = view.findViewById(R.id.city)
+        val description: TextView = view.findViewById(R.id.description)
+        val icon: TextView = view.findViewById(R.id.icon)
+        val temperature: TextView = view.findViewById(R.id.temperature)
+        val deleteButton: ImageButton = view.findViewById(R.id.delete_button)
     }
 }

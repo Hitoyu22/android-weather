@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Météo</string>
     <string name="weather">Météo</string>
-    <string name="search_city">Search a city</string>
+    <string name="search_city">Chercher un ville</string>
     <string name="unknown">Inconnu</string>
 
     <string name="loading">Chargement…</string>

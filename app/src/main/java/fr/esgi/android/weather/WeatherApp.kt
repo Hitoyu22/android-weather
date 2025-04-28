@@ -17,7 +17,7 @@ class WeatherApp : Application() {
 
     private lateinit var preferences: SharedPreferences
     private var darkMode = false
-    private val favorites = ArrayList<City>()
+    private val favorites = mutableListOf<City>()
 
     override fun onCreate() {
         super.onCreate()
@@ -35,20 +35,21 @@ class WeatherApp : Application() {
             val lat = coordinates[0].toDoubleOrNull()
             val lon = coordinates[1].toDoubleOrNull()
 
-            if (lat == null || lon == null) return
-            favorites.add(WeatherAPI.getCityFromCoordinates(lat, lon).get())
+            if (lat != null && lon != null) {
+                WeatherAPI.getCityFromCoordinates(lat, lon).get()?.let { city ->
+                    favorites.add(city)
+                }
+            }
         }
     }
 
-    fun setDarkMode(darkMode: Boolean) {
-        this.darkMode = darkMode
+    fun setFavorites(favorites: List<City>) {
         preferences.edit(true) {
-            putBoolean(DARK_MODE_KEY, darkMode)
+            putStringSet(FAVORITE_CITIES_KEY, favorites.map { "${it.latitude},${it.longitude}" }.toSet())
         }
-    }
 
-    fun isDarkMode(): Boolean {
-        return darkMode
+        this.favorites.clear()
+        this.favorites.addAll(favorites)
     }
 
     fun getFavorites(): List<City> {
@@ -65,5 +66,4 @@ class WeatherApp : Application() {
     fun isFavorite(city: City): Boolean {
         return favorites.contains(city)
     }
-
 }

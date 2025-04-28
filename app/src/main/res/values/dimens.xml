@@ -30,6 +30,7 @@
     <dimen name="favorites_marginStart">32dp</dimen>
     <dimen name="favorites_marginTop">48dp</dimen>
     <dimen name="favorite_list_margin">32dp</dimen>
+    <dimen name="favorite_delete_margin">8dp</dimen>
 
     <dimen name="settings_title_margin_top">32dp</dimen>
     <dimen name="settings_section_spacing">24dp</dimen>
