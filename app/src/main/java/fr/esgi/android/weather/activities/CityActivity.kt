@@ -66,9 +66,6 @@ abstract class CityActivity(layout0: Int) : WeatherActivity(layout0, R.id.home) 
 
         forecast.removeAllViews()
 
-        Log.d("Widget1Provider", "City: ${city.name}, Weather: ${weather.weather}") // Add this line
-
-
         for (day in week) {
             if (day.temperature != null) {
                 val view = layoutInflater.inflate(R.layout.weather_forecast_item, forecast, false)
