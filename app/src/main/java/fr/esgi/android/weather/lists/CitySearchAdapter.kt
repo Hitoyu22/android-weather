@@ -16,7 +16,7 @@ class CitySearchAdapter(context: Context) : ArrayAdapter<City>(context, R.layout
 
     private var cities: List<City> = emptyList()
 
-    override fun getCount(): Int = cities.size.coerceAtMost(3)
+    override fun getCount(): Int = cities.size
 
     override fun getItem(position: Int): City? = cities[position]
 
