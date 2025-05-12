@@ -29,4 +29,11 @@
     <string name="language_french">French</string>
     <string name="language_english">English</string>
 
+    <string name="weather_type_cloud">Cloudy</string>
+    <string name="weather_type_sunny">Sunny</string>
+    <string name="weather_type_rainy">Rainy</string>
+    <string name="weather_type_snow">Snow</string>
+    <string name="weather_type_thunder">Thunder</string>
+    <string name="weather_type_unknown">Unknown</string>
+
 </resources>

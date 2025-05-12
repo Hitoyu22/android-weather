@@ -34,7 +34,7 @@ class FavoritesAdapter(
         val weather = favorites[city]!!
 
         holder.city.text = "${city.name}, ${city.country}"
-        holder.description.text = weather.weather.toString()
+        holder.description.text = weather.toString(holder.itemView.context)
         holder.icon.text = weather.weather.iconText
         holder.temperature.text = "${weather.temperature}°C"
 

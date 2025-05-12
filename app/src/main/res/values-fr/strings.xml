@@ -28,4 +28,11 @@
     <string name="language_french">Français</string>
     <string name="language_english">Anglais</string>
 
+    <string name="weather_type_cloud">Nuageux</string>
+    <string name="weather_type_sunny">Ensoleillé</string>
+    <string name="weather_type_rainy">Pluvieux</string>
+    <string name="weather_type_snow">Neigeux</string>
+    <string name="weather_type_thunder">Orageux</string>
+    <string name="weather_type_unknown">Inconnu</string>
+
 </resources>
