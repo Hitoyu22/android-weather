@@ -35,7 +35,6 @@ class Widget1Provider : AppWidgetProvider() {
                     override fun onLocationUnavailable() = fetchWeatherAndUpdateWidget(context, views, appWidgetManager, appWidgetId, 48.8566, 2.3522)
                 }
             )
-
         }
     }
 
@@ -53,15 +52,16 @@ class Widget1Provider : AppWidgetProvider() {
         views.setTextViewText(R.id.location, city.name)
         views.setTextViewText(R.id.temperature, "${weather.temperature}°C")
 
-        val backgroundDrawable = getWeatherDrawable(context, weather.weather, !weather.isDay)
-        views.setImageViewBitmap(R.id.background_image, backgroundDrawable)
+        val weatherIconDrawable = getWeatherIconDrawable(context, weather.weather)
+        views.setImageViewBitmap(R.id.weather_icon, weatherIconDrawable)
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }
 
-    private fun getWeatherDrawable(context: Context, weather: WeatherType, isNight: Boolean): Bitmap {
-        val weatherDrawableId = weather.getResourceID(isNight)
+    private fun getWeatherIconDrawable(context: Context, weather: WeatherType): Bitmap {
+        val weatherDrawableId = weather.getWidgetIcon()
         val drawable = ContextCompat.getDrawable(context, weatherDrawableId)
         return (drawable as BitmapDrawable).bitmap
     }
 }
+

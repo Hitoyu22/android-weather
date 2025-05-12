@@ -2,6 +2,7 @@ package fr.esgi.android.weather.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
 import fr.esgi.android.weather.R
@@ -65,11 +66,14 @@ abstract class CityActivity(layout0: Int) : WeatherActivity(layout0, R.id.home) 
 
         forecast.removeAllViews()
 
+        Log.d("Widget1Provider", "City: ${city.name}, Weather: ${weather.weather}") // Add this line
+
+
         for (day in week) {
             if (day.temperature != null) {
                 val view = layoutInflater.inflate(R.layout.weather_forecast_item, forecast, false)
                 view.findViewById<TextView>(R.id.day).text = day.date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()) + "."
-                view.findViewById<TextView>(R.id.icon).text = day.weather.icon
+                view.findViewById<TextView>(R.id.icon).text = day.weather.iconText
                 view.findViewById<TextView>(R.id.temperature).text = "${day.temperature}°C"
                 forecast.addView(view)
             }
