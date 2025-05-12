@@ -36,4 +36,7 @@
     <string name="weather_type_thunder">Thunder</string>
     <string name="weather_type_unknown">Unknown</string>
 
+    <string name="home_notification_title">Current Weather</string>
+    <string name="temperature_notification">%1$s: The temperature is %2$s</string>
+
 </resources>
