@@ -2,6 +2,7 @@
 <resources>
     <dimen name="padding">16dp</dimen>
     <dimen name="margin">16dp</dimen>
+    <dimen name="margin_search_bar">24dp</dimen>
     <dimen name="available_space">0dp</dimen>
 
     <dimen name="main_text_size">40sp</dimen>
@@ -17,7 +18,7 @@
     <dimen name="weather_icon_size">20sp</dimen>
     <dimen name="weather_icon_space">4dp</dimen>
 
-    <dimen name="search_size">48dp</dimen>
+    <dimen name="search_size">54dp</dimen>
     <dimen name="city_size">18sp</dimen>
     <dimen name="air_quality_margin">12dp</dimen>
 

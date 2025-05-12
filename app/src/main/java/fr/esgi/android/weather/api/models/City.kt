@@ -7,4 +7,8 @@ data class City(
     @SerializedName("country") val country: String?,
     @SerializedName("latitude") val latitude: Double,
     @SerializedName("longitude") val longitude: Double
-)
+) {
+    override fun toString(): String {
+        return "$name, $country"
+    }
+}
