@@ -9,6 +9,8 @@
     <string name="loading_icon" translatable="false">☀️</string>
 
     <string name="home">Home</string>
+    <string name="home_notification_title">Current Weather</string>
+    <string name="temperature_notification">%1$s: The temperature is %2$s</string>
     <string name="air_quality">The air quality index is of {note}/5 today</string>
 
     <string name="favorites">Favorites</string>
@@ -34,9 +36,22 @@
     <string name="weather_type_rainy">Rainy</string>
     <string name="weather_type_snow">Snow</string>
     <string name="weather_type_thunder">Thunder</string>
-    <string name="weather_type_unknown">Unknown</string>
 
-    <string name="home_notification_title">Current Weather</string>
-    <string name="temperature_notification">%1$s: The temperature is %2$s</string>
+    <string name="source">Source</string>
+    <string name="dwd_germany" translatable="false">DWD Germany</string>
+    <string name="noaa_us" translatable="false">NOAA U.S.</string>
+    <string name="meteo_france" translatable="false">Météo-France</string>
+    <string name="ecmwf" translatable="false">ECMWF</string>
+    <string name="uk_met_office" translatable="false">UK Met Office</string>
+    <string name="kma_korea" translatable="false">KMA Korea</string>
+    <string name="jma_japan" translatable="false">JMA Japan</string>
+    <string name="met_norway" translatable="false">MET Norway</string>
+    <string name="gem_canada" translatable="false">GEM Canada</string>
+    <string name="bom_australia" translatable="false">BOM Australia</string>
+    <string name="cma_china" translatable="false">CMA China</string>
+    <string name="knmi_netherlands" translatable="false">KNMI Netherlands</string>
+    <string name="dmi_denmark" translatable="false">DMI Denmark</string>
+    <string name="italiameteo" translatable="false">ItaliaMeteo</string>
+
 
 </resources>

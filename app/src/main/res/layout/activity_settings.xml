@@ -62,6 +62,15 @@
                         android:paddingTop="@dimen/settings_item_padding"
                         android:paddingBottom="@dimen/settings_item_padding" />
 
+                    <TextView
+                        android:id="@+id/source_setting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/source"
+                        android:textSize="@dimen/text_size"
+                        android:paddingTop="@dimen/settings_item_padding"
+                        android:paddingBottom="@dimen/settings_item_padding" />
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/settings_view_layout_height"

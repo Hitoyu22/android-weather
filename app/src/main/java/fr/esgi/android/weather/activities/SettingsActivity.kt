@@ -6,70 +6,69 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import fr.esgi.android.weather.R
+import fr.esgi.android.weather.api.WeatherAPI
+import fr.esgi.android.weather.api.WeatherSource
 import java.util.Locale
 
 class SettingsActivity : WeatherActivity(R.layout.activity_settings, R.id.settings) {
 
     private lateinit var themeSetting: TextView
     private lateinit var languageSetting: TextView
+    private lateinit var sourceSetting: TextView
     private lateinit var aboutSetting: TextView
 
-    private lateinit var languageFrench: String
-    private lateinit var languageEnglish: String
+    private lateinit var themes: Array<String>
+    private lateinit var languages: Array<String>
+    private lateinit var sources: Array<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        languageFrench = getString(R.string.language_french)
-        languageEnglish = getString(R.string.language_english)
+        themes = arrayOf(R.string.light_mode, R.string.dark_mode, R.string.system_default).map { getString(it) }.toTypedArray()
+        languages = arrayOf(R.string.language_french, R.string.language_english /* , R.string.system_default */).map { getString(it) }.toTypedArray()
+        sources = WeatherSource.entries.map { getString(it.stringId) }.toTypedArray()
 
         themeSetting = findViewById(R.id.theme_setting)
         languageSetting = findViewById(R.id.language_setting)
+        sourceSetting = findViewById(R.id.source_setting)
         aboutSetting = findViewById(R.id.about_setting)
 
-        themeSetting.setOnClickListener {
-            showThemeDialog()
-        }
-
-        languageSetting.setOnClickListener {
-            showLanguageDialog()
-        }
-
-        aboutSetting.setOnClickListener {
-            showAboutDialog()
-        }
+        themeSetting.setOnClickListener { showThemeDialog() }
+        languageSetting.setOnClickListener { showLanguageDialog() }
+        sourceSetting.setOnClickListener { showSourceDialog() }
+        aboutSetting.setOnClickListener { showAboutDialog() }
     }
 
     private fun showThemeDialog() {
-        val items = arrayOf(
-            getString(R.string.light_mode),
-            getString(R.string.dark_mode),
-            getString(R.string.system_default)
-        )
-
         AlertDialog.Builder(this)
             .setTitle(R.string.select_theme)
-            .setItems(items) { _, which ->
-                when (which) {
-                    0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                }
+            .setItems(themes) { _, which ->
+                AppCompatDelegate.setDefaultNightMode(when (which) {
+                    0 -> AppCompatDelegate.MODE_NIGHT_NO
+                    1 -> AppCompatDelegate.MODE_NIGHT_YES
+                    else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                })
             }
             .show()
     }
 
     private fun showLanguageDialog() {
-        val languages = arrayOf(languageFrench, languageEnglish)
-
         AlertDialog.Builder(this)
             .setTitle(R.string.select_language)
             .setItems(languages) { _, which ->
-                when (which) {
-                    0 -> setLanguage("fr")
-                    1 -> setLanguage("en")
-                }
+                setLanguage(when (which) {
+                    0 -> "fr"
+                    1 -> "en"
+                    else -> null
+                })
             }
+            .show()
+    }
+
+    private fun showSourceDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.select_language)
+            .setItems(sources) { _, which -> WeatherAPI.source = WeatherSource.entries[which] }
             .show()
     }
 
@@ -81,9 +80,12 @@ class SettingsActivity : WeatherActivity(R.layout.activity_settings, R.id.settin
             .show()
     }
 
-    private fun setLanguage(languageCode: String) {
-        val locale = Locale(languageCode)
-        Locale.setDefault(locale)
+    private fun setLanguage(languageCode: String?) {
+        var locale: Locale? = null
+        if (languageCode != null) {
+            locale = Locale(languageCode)
+            Locale.setDefault(locale)
+        }
 
         val config = Configuration()
         config.setLocale(locale)

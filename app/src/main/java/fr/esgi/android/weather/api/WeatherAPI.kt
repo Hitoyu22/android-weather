@@ -21,6 +21,7 @@ object WeatherAPI {
     private const val AIR_API = "https://air-quality-api.open-meteo.com/v1/"
     private val gson = Gson()
     private val cache = HashMap<String, Object>()
+    var source: WeatherSource = WeatherSource.METEO_FRANCE
 
     private fun <T> request(api: String, endpoint: String, classOfT: Class<T>): CompletableFuture<T> {
         val url = api + endpoint
@@ -68,7 +69,7 @@ object WeatherAPI {
     }
 
     fun getCurrentWeather(city: City): CompletableFuture<Weather> {
-        return request(WEATHER_API, "forecast?latitude=${city.latitude}&longitude=${city.longitude}&current=temperature_2m,weather_code,is_day&models=meteofrance_seamless", JsonObject::class.java).thenApplyAsync {
+    return request(WEATHER_API, "forecast?latitude=${city.latitude}&longitude=${city.longitude}&current=temperature_2m,weather_code,is_day&models=${source.id}", JsonObject::class.java).thenApplyAsync {
             val current = it.getAsJsonObject("current")
             Weather(
                 LocalDateTime.parse(current.get("time").asString).toLocalDate(),
@@ -80,7 +81,7 @@ object WeatherAPI {
     }
 
     fun getWeather(city: City, start: String, end: String): CompletableFuture<List<Weather>> {
-        return request(WEATHER_API, "forecast?latitude=${city.latitude}&longitude=${city.longitude}&daily=temperature_2m_max,weather_code&models=meteofrance_seamless&start_date=$start&end_date=$end", JsonObject::class.java).thenApplyAsync {
+        return request(WEATHER_API, "forecast?latitude=${city.latitude}&longitude=${city.longitude}&daily=temperature_2m_max,weather_code&models=${source.id}&start_date=$start&end_date=$end", JsonObject::class.java).thenApplyAsync {
             val daily = it.getAsJsonObject("daily")
 
             val time = daily.getAsJsonArray("time")

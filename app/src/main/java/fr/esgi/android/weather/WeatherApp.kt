@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import fr.esgi.android.weather.api.WeatherAPI
+import fr.esgi.android.weather.api.WeatherSource
 import fr.esgi.android.weather.api.models.City
 
 class WeatherApp : Application() {
@@ -13,6 +14,7 @@ class WeatherApp : Application() {
         const val APP_PREFERENCES_KEY = "app_preferences"
         const val DARK_MODE_KEY = "night_mode_enabled"
         const val FAVORITE_CITIES_KEY = "favorite_cities"
+        const val WEATHER_SOURCE_KEY = "weather_source_cities"
     }
 
     private lateinit var preferences: SharedPreferences
@@ -41,6 +43,8 @@ class WeatherApp : Application() {
                 }
             }
         }
+
+        WeatherAPI.source = WeatherSource.get(preferences.getString(WEATHER_SOURCE_KEY, "meteofrance_seamless"))
     }
 
     fun setFavorites(favorites: List<City>) {

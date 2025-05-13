@@ -20,7 +20,7 @@ enum class WeatherType(
     companion object {
         fun getFromCode(code: Int?): WeatherType {
             if (code == null) return SUNNY
-            return WeatherType.entries.find { it.codes.contains(code) } ?: SUNNY
+            return entries.find { it.codes.contains(code) } ?: SUNNY
         }
     }
 
