@@ -16,6 +16,7 @@ import fr.esgi.android.weather.WeatherType
 import fr.esgi.android.weather.api.models.Weather
 import fr.esgi.android.weather.notifications.NotificationHelper
 import fr.esgi.android.weather.location.LocationHelper
+import java.util.Locale
 
 class HomeActivity : CityActivity(R.layout.activity_main) {
 
@@ -61,10 +62,15 @@ class HomeActivity : CityActivity(R.layout.activity_main) {
                     city = getCity(location.latitude, location.longitude)
                     val weather = fetchWeather()
 
+                    val cityName = city.name
+                    val temperatureText = "${weather.temperature}°C"
+                    val notificationMessage = getString(R.string.temperature_notification, cityName, temperatureText)
+
                     NotificationHelper(this@HomeActivity).sendNotification(
-                        "Weather",
-                        city.name + ": " + weather.temperature + "°C"
+                        getString(R.string.home_notification_title),
+                        notificationMessage
                     )
+
                 }
                 override fun onLocationUnavailable() {
                     city = getCity(-1.0, -1.0)

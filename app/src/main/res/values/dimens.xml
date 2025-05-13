@@ -2,6 +2,9 @@
 <resources>
     <dimen name="padding">16dp</dimen>
     <dimen name="margin">16dp</dimen>
+    <dimen name="margin_search_bar">24dp</dimen>
+    <dimen name="height_search_bar">200dp</dimen>
+    <dimen name="height_dropdown_searchbar">300dp</dimen>
     <dimen name="available_space">0dp</dimen>
 
     <dimen name="main_text_size">40sp</dimen>
@@ -10,14 +13,14 @@
     <dimen name="subtitle_size">14sp</dimen>
 
     <dimen name="widget1_size">180dp</dimen>
-    <dimen name="widget_icon_size">128dp</dimen>
+    <dimen name="widget_icon_size">64dp</dimen>
     <dimen name="widget_city_size">25sp</dimen>
     <dimen name="widget_margin_bottom">8dp</dimen>
 
     <dimen name="weather_icon_size">20sp</dimen>
     <dimen name="weather_icon_space">4dp</dimen>
 
-    <dimen name="search_size">48dp</dimen>
+    <dimen name="search_size">54dp</dimen>
     <dimen name="city_size">18sp</dimen>
     <dimen name="air_quality_margin">12dp</dimen>
 
@@ -39,5 +42,20 @@
     <dimen name="settings_dialog_padding">24dp</dimen>
     <dimen name="settings_card_view_padding">4dp</dimen>
     <dimen name="settings_view_layout_height">1dp</dimen>
+
+    <dimen name="widget1_min_width_height">80dp</dimen>
+    <dimen name="widget1_max_width_height">140dp</dimen>
+
+    <dimen name="widget2_min_width">245dp</dimen>
+    <dimen name="widget2_min_height">115dp</dimen>
+    <dimen name="widget2_max_width">624dp</dimen>
+    <dimen name="widget2_max_height">276dp</dimen>
+
+    <dimen name="widget2_padding">8dp</dimen>
+    <dimen name="widget2_mini_padding">4dp</dimen>
+    <dimen name="widget2_linear_layout_margin_bottom">32dp</dimen>
+    <dimen name="widget2_image_view">32dp</dimen>
+
+
 
 </resources>

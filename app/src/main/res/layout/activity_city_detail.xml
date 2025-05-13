@@ -15,6 +15,9 @@
         android:layout_margin="@dimen/margin"
         android:hint="@string/search_city"
         android:minHeight="@dimen/search_size"
+        android:maxHeight="@dimen/height_search_bar"
+        android:scrollbars="vertical"
+        android:dropDownHeight="@dimen/height_dropdown_searchbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -28,4 +28,14 @@
     <string name="language_french">Français</string>
     <string name="language_english">Anglais</string>
 
+    <string name="weather_type_cloud">Nuageux</string>
+    <string name="weather_type_sunny">Ensoleillé</string>
+    <string name="weather_type_rainy">Pluvieux</string>
+    <string name="weather_type_snow">Neigeux</string>
+    <string name="weather_type_thunder">Orageux</string>
+    <string name="weather_type_unknown">Inconnu</string>
+
+    <string name="home_notification_title">Météo actuelle</string>
+    <string name="temperature_notification">%1$s : La température est de %2$s</string>
+
 </resources>

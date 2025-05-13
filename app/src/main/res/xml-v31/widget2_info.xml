@@ -1,0 +1,9 @@
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="@dimen/widget2_min_width"
+    android:minHeight="@dimen/widget2_min_height"
+    android:maxResizeWidth="@dimen/widget2_max_width"
+    android:maxResizeHeight="@dimen/widget2_max_height"
+    android:updatePeriodMillis="@integer/widget1_updatePeriodMillis"
+    android:initialLayout="@layout/widget2_layout"
+    android:resizeMode="horizontal"
+    android:widgetCategory="home_screen" />

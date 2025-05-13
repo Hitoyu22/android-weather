@@ -14,8 +14,12 @@ import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import androidx.core.content.ContextCompat
 import fr.esgi.android.weather.WeatherType
+import fr.esgi.android.weather.api.models.City
+import java.time.LocalDate
+import java.time.format.TextStyle
+import java.util.Locale
 
-class Widget1Provider : AppWidgetProvider() {
+class Widget2Provider : AppWidgetProvider() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -23,7 +27,7 @@ class Widget1Provider : AppWidgetProvider() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
         for (appWidgetId in appWidgetIds) {
-            val views = RemoteViews(context.packageName, R.layout.widget1_layout)
+            val views = RemoteViews(context.packageName, R.layout.widget2_layout)
             val defaultLocation = "Paris, France"
             val defaultTemperature = "15°C"
             views.setTextViewText(R.id.location, defaultLocation)
@@ -55,7 +59,34 @@ class Widget1Provider : AppWidgetProvider() {
         val weatherIconDrawable = getWeatherIconDrawable(context, weather.weather)
         views.setImageViewBitmap(R.id.weather_icon, weatherIconDrawable)
 
+        fetchForecastAndUpdateWidget(context, views, city)
+
         appWidgetManager.updateAppWidget(appWidgetId, views)
+    }
+
+    private fun fetchForecastAndUpdateWidget(
+        context: Context,
+        views: RemoteViews,
+        city: City
+    ) {
+        val today = LocalDate.now()
+        val day = today.dayOfWeek.value
+        val start = today.minusDays(day - 1L)
+        val end = today.plusDays(7L - day)
+        val weekForecast = WeatherAPI.getWeather(city, start.toString(), end.toString()).get()
+
+        views.removeAllViews(R.id.forecastList)
+
+        for (dayForecast in weekForecast) {
+            if (dayForecast.temperature != null) {
+                val itemView = RemoteViews(context.packageName, R.layout.widget_forecast_item)
+                itemView.setTextViewText(R.id.day, dayForecast.date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()))
+                itemView.setTextViewText(R.id.icon, dayForecast.weather.iconText)
+                itemView.setTextViewText(R.id.temperature, "${dayForecast.temperature}°C")
+
+                views.addView(R.id.forecastList, itemView)
+            }
+        }
     }
 
     private fun getWeatherIconDrawable(context: Context, weather: WeatherType): Bitmap {
@@ -64,4 +95,3 @@ class Widget1Provider : AppWidgetProvider() {
         return (drawable as BitmapDrawable).bitmap
     }
 }
-
