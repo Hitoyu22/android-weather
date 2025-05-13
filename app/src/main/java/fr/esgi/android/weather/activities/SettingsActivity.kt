@@ -4,8 +4,8 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatDelegate
 import fr.esgi.android.weather.R
+import fr.esgi.android.weather.WeatherApp
 import fr.esgi.android.weather.api.WeatherAPI
 import fr.esgi.android.weather.api.WeatherSource
 import java.util.Locale
@@ -43,10 +43,10 @@ class SettingsActivity : WeatherActivity(R.layout.activity_settings, R.id.settin
         AlertDialog.Builder(this)
             .setTitle(R.string.select_theme)
             .setItems(themes) { _, which ->
-                AppCompatDelegate.setDefaultNightMode(when (which) {
-                    0 -> AppCompatDelegate.MODE_NIGHT_NO
-                    1 -> AppCompatDelegate.MODE_NIGHT_YES
-                    else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                (application as WeatherApp).setDarkMode(when (which) {
+                    0 -> false
+                    1 -> true
+                    else -> null
                 })
             }
             .show()

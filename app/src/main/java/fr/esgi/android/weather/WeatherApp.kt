@@ -18,7 +18,7 @@ class WeatherApp : Application() {
     }
 
     private lateinit var preferences: SharedPreferences
-    private var darkMode = false
+    private var darkMode: Boolean? = null
     private val favorites = mutableListOf<City>()
 
     override fun onCreate() {
@@ -26,11 +26,10 @@ class WeatherApp : Application() {
 
         preferences = getSharedPreferences(APP_PREFERENCES_KEY, MODE_PRIVATE)
 
-        darkMode = preferences.getBoolean(DARK_MODE_KEY, false)
-        AppCompatDelegate.setDefaultNightMode(
-            if (darkMode) AppCompatDelegate.MODE_NIGHT_YES
-            else AppCompatDelegate.MODE_NIGHT_NO
-        )
+        darkMode = if (preferences.contains(DARK_MODE_KEY))
+            preferences.getBoolean(DARK_MODE_KEY, false)
+        else null
+        setDarkMode(darkMode)
 
         preferences.getStringSet(FAVORITE_CITIES_KEY, emptySet())?.forEach {
             val coordinates = it.split(",")
@@ -45,6 +44,21 @@ class WeatherApp : Application() {
         }
 
         WeatherAPI.source = WeatherSource.get(preferences.getString(WEATHER_SOURCE_KEY, "meteofrance_seamless"))
+    }
+
+    fun setDarkMode(boolean: Boolean?) {
+        AppCompatDelegate.setDefaultNightMode(
+            when (boolean) {
+                true -> AppCompatDelegate.MODE_NIGHT_YES
+                false -> AppCompatDelegate.MODE_NIGHT_NO
+                else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            }
+        )
+        darkMode = boolean
+        preferences.edit(true) {
+            if (boolean == null) remove(DARK_MODE_KEY)
+            else putBoolean(DARK_MODE_KEY, boolean)
+        }
     }
 
     fun setFavorites(favorites: List<City>) {
