@@ -16,7 +16,6 @@ import fr.esgi.android.weather.WeatherType
 import fr.esgi.android.weather.api.models.Weather
 import fr.esgi.android.weather.notifications.NotificationHelper
 import fr.esgi.android.weather.location.LocationHelper
-import java.util.Locale
 
 class HomeActivity : CityActivity(R.layout.activity_main) {
 
@@ -32,18 +31,18 @@ class HomeActivity : CityActivity(R.layout.activity_main) {
 
         if (ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 1000
             )
         } else fetchCity()
     }
 
-    @RequiresPermission(allOf = [Manifest.permission.ACCESS_COARSE_LOCATION])
+    @RequiresPermission(anyOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION])
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
