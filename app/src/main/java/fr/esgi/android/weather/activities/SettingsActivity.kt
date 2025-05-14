@@ -67,7 +67,7 @@ class SettingsActivity : WeatherActivity(R.layout.activity_settings, R.id.settin
 
     private fun showSourceDialog() {
         AlertDialog.Builder(this)
-            .setTitle(R.string.select_language)
+            .setTitle(R.string.select_source)
             .setItems(sources) { _, which -> WeatherAPI.source = WeatherSource.entries[which] }
             .show()
     }
