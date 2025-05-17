@@ -50,7 +50,7 @@ class CityDetailActivity : CityActivity(R.layout.activity_city_detail) {
             mapView.controller.setCenter(geoPoint)
         }
 
-        fetchWeather(null)
+        fetchWeather()
     }
 
     private fun loadCache(file: String): File {
