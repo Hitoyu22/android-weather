@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import fr.esgi.android.weather.R
+import fr.esgi.android.weather.WeatherApp
 import fr.esgi.android.weather.activities.HomeActivity
 
 class NotificationHelper(private val context: Context) {
@@ -50,9 +51,7 @@ class NotificationHelper(private val context: Context) {
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(
-                PendingIntent.getActivity(context, 0,
-                    Intent(context, HomeActivity::class.java), PendingIntent.FLAG_IMMUTABLE))
+            .setContentIntent(WeatherApp.getPendingIntent(context))
             .build()
 
         NotificationManagerCompat.from(context).notify(1, notification)

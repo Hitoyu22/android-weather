@@ -1,5 +1,6 @@
 package fr.esgi.android.weather.widgets
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -13,6 +14,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import androidx.core.content.ContextCompat
+import fr.esgi.android.weather.WeatherApp
 import fr.esgi.android.weather.WeatherType
 
 class Widget1Provider : AppWidgetProvider() {
@@ -24,6 +26,7 @@ class Widget1Provider : AppWidgetProvider() {
 
         for (appWidgetId in appWidgetIds) {
             val views = RemoteViews(context.packageName, R.layout.widget1_layout)
+            views.setOnClickPendingIntent(R.id.widget1, WeatherApp.getPendingIntent(context))
             val defaultLocation = "Paris, France"
             val defaultTemperature = "15°C"
             views.setTextViewText(R.id.location, defaultLocation)
