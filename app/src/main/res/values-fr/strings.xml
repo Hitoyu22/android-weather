@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Météo</string>
     <string name="weather">Météo</string>
+    <string name="alert">Alerte Météo</string>
     <string name="search_city">Chercher un ville</string>
     <string name="unknown">Inconnu</string>
 

@@ -1,4 +1,4 @@
-package fr.esgi.android.weather.location
+package fr.esgi.android.weather.helpers
 
 import android.Manifest
 import android.content.Context
