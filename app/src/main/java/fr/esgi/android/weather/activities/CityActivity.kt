@@ -2,7 +2,6 @@ package fr.esgi.android.weather.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
 import fr.esgi.android.weather.R

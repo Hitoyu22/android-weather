@@ -14,8 +14,8 @@ import com.google.android.gms.location.LocationServices
 import fr.esgi.android.weather.R
 import fr.esgi.android.weather.WeatherType
 import fr.esgi.android.weather.api.models.Weather
-import fr.esgi.android.weather.notifications.NotificationHelper
-import fr.esgi.android.weather.location.LocationHelper
+import fr.esgi.android.weather.helpers.NotificationHelper
+import fr.esgi.android.weather.helpers.LocationHelper
 
 class HomeActivity : CityActivity(R.layout.activity_main) {
 

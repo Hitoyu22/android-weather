@@ -33,15 +33,8 @@ class CityDetailActivity : CityActivity(R.layout.activity_city_detail) {
         val osmConfig = Configuration.getInstance()
         osmConfig.load(applicationContext, getSharedPreferences("osmdroid", MODE_PRIVATE))
         osmConfig.userAgentValue = packageName
-
-        val basePath = File(filesDir, "osmdroid")
-        if (!basePath.exists()) basePath.mkdirs()
-
-        val tileCache = File(cacheDir, "osmdroid/tiles")
-        if (!tileCache.exists()) tileCache.mkdirs()
-
-        osmConfig.osmdroidBasePath = basePath
-        osmConfig.osmdroidTileCache = tileCache
+        osmConfig.osmdroidBasePath = loadCache("osmdroid")
+        osmConfig.osmdroidTileCache = loadCache("osmdroid/tiles")
 
         mapView = findViewById(R.id.mapview)
         mapView.setTileSource(TileSourceFactory.MAPNIK)
@@ -57,7 +50,13 @@ class CityDetailActivity : CityActivity(R.layout.activity_city_detail) {
             mapView.controller.setCenter(geoPoint)
         }
 
-        fetchWeather()
+        fetchWeather(null)
+    }
+
+    private fun loadCache(file: String): File {
+        val cache = File(cacheDir, file)
+        if (!cache.exists()) cache.mkdirs()
+        return cache
     }
 
     private fun updateFavoriteButton() {

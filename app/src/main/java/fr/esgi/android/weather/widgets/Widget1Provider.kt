@@ -8,7 +8,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import fr.esgi.android.weather.R
 import fr.esgi.android.weather.api.WeatherAPI
-import fr.esgi.android.weather.location.LocationHelper
+import fr.esgi.android.weather.helpers.LocationHelper
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location

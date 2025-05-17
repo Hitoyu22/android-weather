@@ -37,9 +37,7 @@ class WeatherApp : Application() {
             val lon = coordinates[1].toDoubleOrNull()
 
             if (lat != null && lon != null) {
-                WeatherAPI.getCityFromCoordinates(lat, lon).get()?.let { city ->
-                    favorites.add(city)
-                }
+                WeatherAPI.getCityFromCoordinates(lat, lon).thenAcceptAsync { favorites.add(it) }
             }
         }
 
