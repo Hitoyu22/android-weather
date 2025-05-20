@@ -33,6 +33,8 @@ abstract class CityActivity(layout0: Int) : WeatherActivity(layout0, R.id.home) 
         temperature = findViewById<TextView>(R.id.currentTemp)
         temperature.text = "...°C"
 
+        air = findViewById<TextView>(R.id.airQualityText)
+
         findViewById<TextView>(R.id.dateText).text = LocalDate.now().format(dateFormatter)
 
         forecast = findViewById<LinearLayout>(R.id.forecastList)
@@ -40,9 +42,6 @@ abstract class CityActivity(layout0: Int) : WeatherActivity(layout0, R.id.home) 
             val view = layoutInflater.inflate(R.layout.weather_forecast_item, forecast, false)
             forecast.addView(view)
         }
-
-        air = findViewById<TextView>(R.id.airQualityText)
-        air.text = getString(R.string.air_quality)
     }
 
     protected fun getCity(latitude: Double, longitude: Double): City {
@@ -77,7 +76,7 @@ abstract class CityActivity(layout0: Int) : WeatherActivity(layout0, R.id.home) 
 
         val aqi = WeatherAPI.getAirQuality(city).get()
         val note = (100 - aqi) / 20.0
-        air.text = air.text.toString().replace("{note}", "$note")
+        air.text = getString(R.string.air_quality).replace("{note}", "$note")
 
         return weather
     }
